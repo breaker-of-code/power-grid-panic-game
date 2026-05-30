@@ -125,7 +125,7 @@
     <div class="hi reveal r2"><span class="hud-label">Best Survival</span><span id="hiscore">—</span></div>
     <button class="btn reveal r4" id="startBtn">▶ Energize the City</button>
     <button class="btn ghost reveal r4" id="howBtn" style="animation-delay:.85s">❓ How to Play</button>
-    <button class="btn ghost reveal r4" id="resetBtn" style="animation-delay:1s">↺ Reset Data</button>
+    <div class="reveal r4" style="animation-delay:1s;margin-top:16px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px">v1.3.7</div>
   </div>
 
   <!-- HOW TO PLAY -->
@@ -232,6 +232,19 @@ function resize(){
     for(const u of units)u.r=(u.big?1.22:1)*baseUR;
     relax();assignAll();
   }
+  buildBG();
+}
+let bgCanvas=null;
+function buildBG(){
+  if(W<=0||H<=0)return;
+  bgCanvas=document.createElement('canvas');
+  bgCanvas.width=W*DPR;bgCanvas.height=H*DPR;
+  const b=bgCanvas.getContext('2d');b.setTransform(DPR,0,0,DPR,0,0);
+  b.strokeStyle='rgba(19,35,61,.55)';b.lineWidth=1;const gs=46;
+  b.beginPath();
+  for(let x=0;x<W;x+=gs){b.moveTo(x,0);b.lineTo(x,H);}
+  for(let y=0;y<H;y+=gs){b.moveTo(0,y);b.lineTo(W,y);}
+  b.stroke();
 }
 function relax(){
   const px=Math.max(W*0.06,baseUR+10),py=Math.max(H*0.1,baseUR+22);
@@ -333,20 +346,20 @@ function start(){
   initAudio();if(AC&&AC.state==='suspended')AC.resume();
   hideAllOverlays();reset();state='play';musicStep=0;startMusic();
   $('timeBlock').style.display='';
-  last=performance.now();requestAnimationFrame(loop);
+  startLoop();
 }
 function hideAllOverlays(){['start','menu','over','howto'].forEach(id=>$(id).classList.add('hidden'));}
 
 /* ============ MENU / OVER ============ */
 function pauseGame(){if(state!=='play')return;state='paused';SFX.btn();
   $('mCur').textContent=fmt(t);$('mBest').textContent=hiScore>0?fmt(hiScore):'0:00';$('menu').classList.remove('hidden');}
-function resumeGame(){if(state!=='paused')return;SFX.btn();$('menu').classList.add('hidden');state='play';last=performance.now();requestAnimationFrame(loop);}
+function resumeGame(){if(state!=='paused')return;SFX.btn();$('menu').classList.add('hidden');state='play';startLoop();}
 function goHome(){SFX.btn();hideAllOverlays();state='start';$('start').classList.remove('hidden');showHi();}
 
 function beginDeath(){
   state='dying';deathT=0;SFX.life();if(navigator.vibrate)navigator.vibrate([80,60,160]);
   units.forEach((u,i)=>{u.links=0;u.killAt=(i/Math.max(1,units.length))*1.4;});
-  last=performance.now();requestAnimationFrame(loop);
+  startLoop();
 }
 function gameOver(){
   state='over';
@@ -400,11 +413,12 @@ function progress(){
 }
 
 /* ============ LOOP ============ */
-let last=0;
-function loop(now){
+let last=0,loopGen=0;
+function startLoop(){const g=++loopGen;last=performance.now();requestAnimationFrame(function step(now){if(g!==loopGen)return;loop(now,step);});}
+function loop(now,step){
   if(state!=='play'&&state!=='dying'&&state!=='tutorial')return;
   let dt=(now-last)/1000;last=now;if(dt>0.05)dt=0.05;
-  if(state==='dying'){runDeath(dt);draw();requestAnimationFrame(loop);return;}
+  if(state==='dying'){runDeath(dt);draw();requestAnimationFrame(step);return;}
 
   const demo=state==='tutorial';
   if(!demo){t+=dt;progress();const m=Math.floor(t/60);if(m>lastMin){lastMin=m;toast('🏆 '+m+' MINUTE'+(m>1?'S':'')+' SURVIVED!');}}
@@ -440,7 +454,7 @@ function loop(now){
   if(shakeT>0)shakeT-=dt;
   draw();
   $('time').textContent=demo?'DEMO':fmt(t);$('units').textContent=units.length;renderLives();
-  requestAnimationFrame(loop);
+  requestAnimationFrame(step);
 }
 function runDeath(dt){
   deathT+=dt;updateParticles(dt);
@@ -461,9 +475,7 @@ function draw(){
   ctx.save();
   if(shakeT>0){const m=shakeT/0.4*5;ctx.translate((Math.random()-0.5)*m,(Math.random()-0.5)*m);}
   ctx.clearRect(-20,-20,W+40,H+40);
-  ctx.strokeStyle='rgba(19,35,61,.55)';ctx.lineWidth=1;const gs=46;
-  for(let x=0;x<W;x+=gs){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-  for(let y=0;y<H;y+=gs){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  if(bgCanvas)ctx.drawImage(bgCanvas,0,0,W,H);
   for(const u of units){if(u.links>0)drawWire(grids[u.gi],u,u.links);}
   grids.forEach((g,i)=>drawGrid(g,i));
   for(const u of units)drawUnit(u);
@@ -543,8 +555,8 @@ function drawUnit(u){
     ctx.beginPath();ctx.arc(0,0,R+5+8*(1-a),0,7);ctx.stroke();ctx.globalAlpha=1;}
   // icon centered
   ctx.font=(R*1.05)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
-  if(blackout){ctx.globalAlpha=0.35;ctx.filter='grayscale(1) brightness(0.5)';}
-  ctx.fillText(def.icon,0,1);ctx.filter='none';ctx.globalAlpha=1;
+  if(blackout)ctx.globalAlpha=0.3;
+  ctx.fillText(def.icon,0,1);ctx.globalAlpha=1;
   // battery bar
   const bw=u.r*1.9*sp,bh=6,bx=-bw/2,by=R+6;
   ctx.fillStyle='rgba(255,255,255,.08)';roundRect(bx,by,bw,bh,3);ctx.fill();
@@ -571,13 +583,14 @@ function updateParticles(dt){
     if(p.life<=0)particles.splice(i,1);}
 }
 function drawParticles(){
+  if(!particles.length)return;
+  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
   for(const p of particles){
-    ctx.save();ctx.globalAlpha=Math.min(1,p.life*1.6);ctx.fillStyle=p.color;
-    if(p.heart){ctx.font=(9+p.size*2)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.shadowColor=p.color;ctx.shadowBlur=8;ctx.fillText('❤',p.x,p.y);}
-    else{ctx.shadowColor=p.color;ctx.shadowBlur=8;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(0.5,p.size),0,7);ctx.fill();}
-    ctx.restore();
+    ctx.globalAlpha=Math.min(1,p.life*1.6);ctx.fillStyle=p.color;
+    if(p.heart){ctx.font=(9+p.size*2)+'px serif';ctx.fillText('❤',p.x,p.y);}
+    else{ctx.beginPath();ctx.arc(p.x,p.y,Math.max(0.5,p.size),0,7);ctx.fill();}
   }
+  ctx.globalAlpha=1;ctx.restore();
 }
 
 /* ============ TUTORIAL ============ */
@@ -598,7 +611,7 @@ function launchTutorial(){
   layoutGrids();['house','office','factoryS','mall'].forEach(spawnUnit);units.forEach(u=>u.spawn=1);
   state='tutorial';renderLives();$('timeBlock').style.display='none';
   tutStep=0;showStep();startMusic();
-  last=performance.now();requestAnimationFrame(loop);
+  startLoop();
 }
 function showStep(){
   const s=TUT[tutStep];if(!s)return;
@@ -629,7 +642,6 @@ $('homeBtn').onclick=goHome;
 $('overHomeBtn').onclick=goHome;
 $('menuBtn').onclick=pauseGame;
 $('howBtn').onclick=openHow;
-$('resetBtn').onclick=()=>{SFX.btn();try{localStorage.removeItem('pgp_hi');localStorage.removeItem('pgp_seen');}catch(e){}location.reload();};
 $('howBackBtn').onclick=goHome;
 $('tryTutBtn').onclick=()=>{SFX.btn();launchTutorial();};
 $('muteBtn').onclick=()=>{sfxOn=!sfxOn;$('muteBtn').textContent=sfxOn?'🔊':'🔇';try{localStorage.setItem('pgp_mute',sfxOn?'0':'1')}catch(e){}if(sfxOn)SFX.btn();};
