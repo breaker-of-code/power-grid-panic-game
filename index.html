@@ -21,7 +21,8 @@
   .hud-block{display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1;}
   .hud-label{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
   .hud-val{font-family:'Share Tech Mono',monospace;font-size:19px;color:var(--cyan);text-shadow:0 0 10px var(--cyan-dim);}
-  #lives{font-size:17px;letter-spacing:1px;}
+  #lives{font-size:39px;letter-spacing:3px;line-height:1;}
+  #lives span{display:inline-block;vertical-align:middle;line-height:1;}
   .iconbtn{background:rgba(34,224,255,.08);border:1px solid var(--grid-line);color:var(--cyan);
     width:38px;height:38px;border-radius:8px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
   .iconbtn:active{transform:scale(.93);}
@@ -125,7 +126,7 @@
     <div class="hi reveal r2"><span class="hud-label">Best Survival</span><span id="hiscore">—</span></div>
     <button class="btn reveal r4" id="startBtn">▶ Energize the City</button>
     <button class="btn ghost reveal r4" id="howBtn" style="animation-delay:.85s">❓ How to Play</button>
-    <div class="reveal r4" style="animation-delay:1s;margin-top:16px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px">v1.3.7</div>
+    <div class="reveal r4" style="animation-delay:1s;margin-top:16px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px">v1.4.4</div>
   </div>
 
   <!-- HOW TO PLAY -->
@@ -193,6 +194,7 @@ function tone(freq,dur,type='sine',vol=0.2,glideTo){
   if(glideTo)o.frequency.exponentialRampToValueAtTime(Math.max(20,glideTo),now+dur);
   g.gain.setValueAtTime(vol,now);g.gain.exponentialRampToValueAtTime(0.0001,now+dur);
   o.connect(g);g.connect(master);o.start(now);o.stop(now+dur);
+  o.onended=()=>{try{o.disconnect();g.disconnect();}catch(e){}};
 }
 const SFX={
   tap:()=>tone(420,0.05,'square',0.08),
@@ -467,7 +469,7 @@ function runDeath(dt){
   if(deathT>=2.2){gameOver();}
 }
 function fmt(s){const m=Math.floor(s/60),ss=Math.floor(s%60);return m+':'+String(ss).padStart(2,'0');}
-function renderLives(){const max=Math.max(3,lives);let s='';for(let i=0;i<max;i++)s+=i<lives?'<span style="color:#22e0ff;text-shadow:0 0 8px rgba(34,224,255,.7)">❤</span>':'<span style="color:#33405c">♡</span>';$('lives').innerHTML=s;}
+function renderLives(){const max=Math.max(3,lives);let s='';for(let i=0;i<max;i++)s+='<span style="color:#22e0ff;text-shadow:0 0 8px rgba(34,224,255,.7)'+(i<lives?'':';opacity:.25')+'">❤</span>';$('lives').innerHTML=s;}
 
 /* ============ RENDER ============ */
 function bgColor(b,max){const p=b/max;return p>0.5?'#3df09a':p>0.25?'#ffe14d':'#ff4d5e';}
@@ -505,9 +507,9 @@ function draw(){
 function drawGrid(g,i){
   const pulse=0.5+0.5*Math.sin(t*3),R=Math.max(1,gridR(g));
   ctx.save();
-  ctx.shadowColor='rgba(34,224,255,.8)';ctx.shadowBlur=16+10*pulse;
+  const gR=R+16+10*pulse;ctx.globalAlpha=0.8;ctx.drawImage(glowSprite('#22e0ff'),g.x-gR,g.y-gR,gR*2,gR*2);ctx.globalAlpha=1;
   ctx.beginPath();ctx.arc(g.x,g.y,R,0,7);ctx.fillStyle='#0c2231';ctx.fill();
-  ctx.lineWidth=2.5;ctx.strokeStyle='#22e0ff';ctx.stroke();ctx.shadowBlur=0;
+  ctx.lineWidth=2.5;ctx.strokeStyle='#22e0ff';ctx.stroke();
   ctx.font=(R*0.95)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('⚡',g.x,g.y+1);
   ctx.restore();
   ctx.fillStyle='#22e0ff';ctx.font="11px 'Share Tech Mono'";ctx.textAlign='center';
@@ -527,7 +529,8 @@ function drawWire(g,u,n){
     ctx.strokeStyle='#22e0ff';ctx.lineWidth=2;ctx.setLineDash([10,12]);ctx.lineDashOffset=-(t2*60)%22;
     ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(ux,uy);ctx.stroke();ctx.setLineDash([]);
     const p=((t2*0.9)+i*0.25)%1,ex=gx+(ux-gx)*p,ey=gy+(uy-gy)*p;
-    ctx.fillStyle='#bdf6ff';ctx.shadowColor='#22e0ff';ctx.shadowBlur=12;ctx.beginPath();ctx.arc(ex,ey,4,0,7);ctx.fill();ctx.shadowBlur=0;
+    ctx.globalAlpha=0.9;ctx.drawImage(glowSprite('#22e0ff'),ex-9,ey-9,18,18);ctx.globalAlpha=1;
+    ctx.fillStyle='#bdf6ff';ctx.beginPath();ctx.arc(ex,ey,3,0,7);ctx.fill();
   }
   ctx.restore();
 }
@@ -548,9 +551,11 @@ function drawUnit(u){
     ctx.globalAlpha=blackout?0.4:0.92;ctx.fillStyle=blackout?'#7a7f8b':'#cfe3ff';
     ctx.fillText(u.name,0,-(u.r*sp)-9);ctx.globalAlpha=1;
   }
-  ctx.shadowColor=blackout?'#3a3f4a':col;ctx.shadowBlur=blackout?4:(bonus?14:(low?16*flash:9));
+  const gv=blackout?4:(bonus?14:(low?16*flash:9));
+  const gA=Math.min(0.85,gv/20),gR=R+gv*0.85;
+  ctx.globalAlpha=gA;ctx.drawImage(glowSprite(col),-gR,-gR,gR*2,gR*2);ctx.globalAlpha=1;
   ctx.beginPath();ctx.arc(0,0,R,0,7);ctx.fillStyle=blackout?'#15171c':'#0d1626';ctx.fill();
-  ctx.lineWidth=u.links>0?3:2;ctx.strokeStyle=col;ctx.globalAlpha=blackout?0.5:flash;ctx.stroke();ctx.globalAlpha=1;ctx.shadowBlur=0;
+  ctx.lineWidth=u.links>0?3:2;ctx.strokeStyle=col;ctx.globalAlpha=blackout?0.5:flash;ctx.stroke();ctx.globalAlpha=1;
   if(u.steal>0){const a=u.steal/0.6;ctx.strokeStyle='#ffb524';ctx.globalAlpha=a;ctx.lineWidth=3;
     ctx.beginPath();ctx.arc(0,0,R+5+8*(1-a),0,7);ctx.stroke();ctx.globalAlpha=1;}
   // icon centered
@@ -565,11 +570,21 @@ function drawUnit(u){
   ctx.restore();
 }
 function roundRect(x,y,w,h,r){if(w<=0||h<=0)return;r=Math.max(0,Math.min(r,w/2,h/2));ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function hexA(h,a){const n=parseInt(h.slice(1),16);return'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+const glowCache={};
+function glowSprite(color){
+  if(glowCache[color])return glowCache[color];
+  const s=72,c=document.createElement('canvas');c.width=c.height=s;
+  const g=c.getContext('2d'),grad=g.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+  grad.addColorStop(0,hexA(color,0.95));grad.addColorStop(0.45,hexA(color,0.6));grad.addColorStop(1,hexA(color,0));
+  g.fillStyle=grad;g.fillRect(0,0,s,s);glowCache[color]=c;return c;
+}
 
 /* ============ PARTICLES ============ */
 let particles=[];
 function burst(x,y,o){
   o=o||{};const n=o.n||10;
+  if(particles.length>140)return;
   for(let i=0;i<n;i++){
     const a=Math.random()*Math.PI*2,sp=40+Math.random()*130;
     particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-(o.up?70:0),
