@@ -11,18 +11,27 @@
     --bg:#070b14;--panel:#0d1626;--grid-line:#13233d;
     --cyan:#22e0ff;--cyan-dim:#0a6f82;--amber:#ffb524;
     --green:#3df09a;--red:#ff4d5e;--yellow:#ffe14d;--text:#cfe3ff;--muted:#5d7299;
-    /* canvas tokens (read by JS) */
-    --c-bg:#05080e;--c-world:#070b14;--c-gridline:#13233d;--c-zone:#1d3a5c;
-    --c-unitbody:#0d1626;--c-unitdark:#15171c;--c-gridbody:#0c2231;--c-hudgrad1:#0e1a2e;--c-hudgrad2:#0a1322;
     --ov-bg:rgba(5,8,14,.94);
+    --c-bg:#05080e;--c-world:#070b14;--c-gridline:rgba(19,35,61,.55);--c-zone:#1d3a5c;
+    --c-unitbody:#0d1626;--c-unitdark:#15171c;--c-gridbody:#0c2231;
+    --c-hudgrad1:#0e1a2e;--c-hudgrad2:#0a1322;
+    --c-wire-glow:rgba(34,224,255,.16);--c-wire-dot:#bdf6ff;
+    --c-mgr-bg1:#102135;--c-mgr-bg2:#0a1322;--c-portrait-bg:#081019;
+    --c-fps-bg:rgba(5,8,14,.72);--c-expand-sub:#cfe3ff;
+    --c-pct-outline:rgba(5,13,20,.9);--c-pct-text:#ffffff;--c-puBody:#0d1626;
   }
   body.light{
-    --bg:#e8eef6;--panel:#ffffff;--grid-line:#c3d2e6;
-    --cyan:#0a8fb0;--cyan-dim:#7fd4e6;--amber:#c77d00;
-    --green:#119a63;--red:#d6324a;--yellow:#b88a00;--text:#1a2a40;--muted:#6b7d99;
-    --c-bg:#dde6f1;--c-world:#eef3fa;--c-gridline:#c8d6e8;--c-zone:#a9bdd8;
-    --c-unitbody:#ffffff;--c-unitdark:#cdd6e3;--c-gridbody:#d4e8f2;--c-hudgrad1:#f3f7fc;--c-hudgrad2:#e6eef7;
-    --ov-bg:rgba(232,238,246,.95);
+    --bg:#d4e0ef;--panel:#ffffff;--grid-line:#aec4da;
+    --cyan:#0a7fa0;--cyan-dim:#7fd4e6;--amber:#a06500;
+    --green:#0a7048;--red:#b52035;--yellow:#806000;--text:#192840;--muted:#4e6580;
+    --ov-bg:rgba(200,216,235,.96);
+    --c-bg:#c8d8e8;--c-world:#dceaf8;--c-gridline:rgba(120,160,195,.4);--c-zone:#6888a8;
+    --c-unitbody:#f0f6fc;--c-unitdark:#c0d0e0;--c-gridbody:#b8d8f0;
+    --c-hudgrad1:#e8f0fa;--c-hudgrad2:#d8e8f6;
+    --c-wire-glow:rgba(10,127,160,.22);--c-wire-dot:#0a7fa0;
+    --c-mgr-bg1:#e4f0fc;--c-mgr-bg2:#d4e8f8;--c-portrait-bg:#c4daf0;
+    --c-fps-bg:rgba(200,216,235,.82);--c-expand-sub:#192840;
+    --c-pct-outline:rgba(255,255,255,.85);--c-pct-text:#0a1a28;--c-puBody:#f0f6fc;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Chakra Petch',sans-serif;color:var(--text);user-select:none;}
@@ -33,7 +42,7 @@
   .hud-block{display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1;}
   .hud-label{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
   .hud-val{font-family:'Share Tech Mono',monospace;font-size:19px;color:var(--cyan);text-shadow:0 0 10px var(--cyan-dim);}
-  #lives{font-size:39px;letter-spacing:3px;line-height:1;}
+  #lives{font-size:29px;letter-spacing:3px;line-height:1;}
   #lives span{display:inline-block;vertical-align:middle;line-height:1;}
   .iconbtn{background:rgba(34,224,255,.08);border:1px solid var(--grid-line);color:var(--cyan);
     width:38px;height:38px;border-radius:8px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
@@ -50,9 +59,10 @@
   h1{font-weight:700;font-size:clamp(30px,9vw,58px);letter-spacing:3px;line-height:.95;
     background:linear-gradient(90deg,var(--cyan),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 40px rgba(34,224,255,.25);}
   h1 .sub{display:block;font-size:.42em;letter-spacing:7px;color:var(--amber);-webkit-text-fill-color:var(--amber);margin-top:6px;}
-  .btn{font-family:'Chakra Petch',sans-serif;font-weight:700;letter-spacing:3px;font-size:15px;color:#04121a;
-    background:linear-gradient(180deg,var(--cyan),#16b6d4);border:none;padding:14px 40px;border-radius:4px;cursor:pointer;text-transform:uppercase;
-    box-shadow:0 0 24px rgba(34,224,255,.45),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .08s,box-shadow .2s;margin:6px;}
+  .btn{font-family:'Chakra Petch',sans-serif;font-weight:700;letter-spacing:3px;font-size:15px;color:#fff;
+    background:linear-gradient(180deg,var(--cyan),var(--cyan-dim));border:none;padding:14px 40px;border-radius:4px;cursor:pointer;text-transform:uppercase;
+    box-shadow:0 0 24px rgba(34,224,255,.45),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .08s,box-shadow .2s;margin:6px;}
+  body.light .btn{color:#fff;}
   .btn.ghost{background:transparent;color:var(--cyan);border:1px solid var(--cyan);box-shadow:none;}
   .btn:active{transform:translateY(2px) scale(.98);}
   .btnrow{display:flex;flex-wrap:wrap;justify-content:center;}
@@ -66,6 +76,7 @@
   .toast{position:absolute;top:108px;left:50%;transform:translateX(-50%);z-index:8;font-weight:600;letter-spacing:2px;font-size:13px;
     padding:8px 18px;border-radius:20px;pointer-events:none;opacity:0;transition:opacity .25s;background:rgba(13,22,38,.92);border:1px solid var(--grid-line);text-align:center;}
   .toast.show{opacity:1;}
+  .toast.big{font-size:18px;padding:11px 24px;letter-spacing:1.5px;border-color:var(--amber);color:var(--amber);}
   /* animated start screen */
   .start-screen{overflow:hidden;background:radial-gradient(circle at 50% 30%,rgba(34,224,255,.12),transparent 55%),radial-gradient(circle at 50% 110%,rgba(255,181,36,.10),transparent 50%),var(--bg);}
   .start-screen::before{content:"";position:absolute;left:-25%;right:-25%;top:-10%;height:90%;z-index:-1;
@@ -87,7 +98,7 @@
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   .start-screen h1{
     font-size:clamp(44px,13vw,92px);letter-spacing:5px;line-height:.92;
-    background:linear-gradient(100deg,#22e0ff 0%,#7cf0ff 35%,#ffe14d 70%,#ffb524 100%);
+    background:linear-gradient(100deg,var(--cyan) 0%,#7cf0ff 35%,var(--amber) 70%,#ff8c00 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
     -webkit-text-fill-color:transparent;position:relative;}
   .title-wrap::after{content:"";position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
@@ -96,8 +107,8 @@
     filter:blur(20px);will-change:opacity;animation:haloPulse 2.6s ease-in-out infinite;}
   @keyframes haloPulse{0%,100%{opacity:.4}50%{opacity:.9}}
   .start-screen h1 .sub{font-size:.44em;letter-spacing:14px;margin-top:10px;
-    background:linear-gradient(90deg,#ffb524,#ff7b39);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-    text-shadow:0 0 16px rgba(255,150,40,.4);}
+    background:linear-gradient(90deg,var(--amber),#ff7b00);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
   .hi{display:flex;flex-direction:column;align-items:center;gap:3px;margin:22px 0 30px;}
   .hi .hi-label{font-size:14px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;display:flex;align-items:center;gap:8px;}
   .hi .hi-label .bill{font-size:26px;filter:drop-shadow(0 0 8px rgba(255,181,36,.5));}
@@ -142,12 +153,12 @@
   #mgr{position:absolute;left:0;right:0;bottom:0;z-index:22;display:flex;align-items:flex-end;justify-content:center;
     padding:0 10px calc(10px + env(safe-area-inset-bottom));pointer-events:none;}
   #mgr.show{pointer-events:auto;}
-  .mgr-card{width:100%;max-width:520px;background:linear-gradient(180deg,#102135,#0a1322);
-    border:1px solid var(--cyan);border-radius:12px;padding:11px 13px;box-shadow:0 0 22px rgba(34,224,255,.22),0 8px 28px rgba(0,0,0,.5);
+  .mgr-card{width:100%;max-width:520px;background:linear-gradient(180deg,var(--c-mgr-bg1,#102135),var(--c-mgr-bg2,#0a1322));
+    border:1px solid var(--cyan);border-radius:12px;padding:11px 13px;box-shadow:0 0 22px rgba(34,224,255,.22),0 8px 28px rgba(0,0,0,.3);
     transform:translateY(28px);opacity:0;transition:transform .3s cubic-bezier(.2,.9,.3,1),opacity .3s;
     display:grid;grid-template-columns:46px 1fr;grid-template-rows:auto auto;gap:6px 11px;align-items:center;}
   #mgr.show .mgr-card{transform:translateY(0);opacity:1;}
-  #mgrPortrait{grid-row:1 / span 2;width:46px;height:46px;border-radius:50%;background:#081019;border:2px solid var(--cyan);box-shadow:0 0 10px rgba(34,224,255,.4);align-self:start;}
+
   .mgr-name{font-weight:700;letter-spacing:1.5px;color:var(--cyan);font-size:13px;display:flex;flex-direction:column;line-height:1.25;}
   .mgr-name span{font-weight:400;letter-spacing:1px;color:var(--muted);font-size:9px;text-transform:uppercase;}
   .mgr-text{grid-column:2;font-size:13px;line-height:1.4;color:var(--text);}
@@ -162,8 +173,8 @@
   .load-track{width:min(74vw,300px);height:8px;background:rgba(34,224,255,.12);border:1px solid var(--grid-line);border-radius:6px;overflow:hidden;}
   .load-fill{height:100%;width:0%;background:linear-gradient(90deg,#16b6d4,var(--cyan));box-shadow:0 0 12px var(--cyan);transition:width .2s ease;}
   .load-pct{margin-top:12px;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--muted);}
-  #fps{position:absolute;top:6px;right:8px;z-index:50;font-family:'Share Tech Mono',monospace;font-size:12px;
-    color:#3df09a;background:rgba(5,8,14,.6);padding:3px 7px;border-radius:5px;pointer-events:none;letter-spacing:1px;}
+  #fps{position:absolute;top:0;right:0;z-index:50;font-family:'Share Tech Mono',monospace;font-size:12px;
+    color:#3df09a;background:var(--c-fps-bg,rgba(5,8,14,.72));padding:3px 7px;border-radius:0 0 0 5px;pointer-events:none;letter-spacing:1px;}
   .result-block{display:flex;flex-direction:column;align-items:center;gap:2px;margin:10px 0;}
   .result-block.best{margin-top:16px;}
   .big-money{font-family:'Share Tech Mono',monospace;font-weight:700;font-size:clamp(38px,13vw,72px);
@@ -195,9 +206,7 @@
     box-shadow:0 0 16px rgba(34,224,255,.25);transition:transform .15s,background .2s;}
   #themeBtn:active{transform:scale(.9) rotate(-20deg);}
   #themeBtn span{display:block;line-height:1;transform:translateY(0.5px);}
-  #introHL{position:absolute;inset:0;z-index:21;pointer-events:none;background:rgba(5,8,14,.62);}
-  #introHL.hidden{display:none;}
-  body.light #introHL{background:rgba(20,35,60,.42);}
+
   body.light .start-screen{background:
     radial-gradient(circle at 50% 28%,rgba(10,143,176,.16),transparent 55%),
     radial-gradient(circle at 50% 112%,rgba(199,125,0,.14),transparent 50%),
@@ -206,6 +215,33 @@
     background-image:linear-gradient(rgba(10,143,176,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(10,143,176,.16) 1px,transparent 1px);}
   body.light .start-screen::after{background:repeating-linear-gradient(transparent 0 60px,rgba(10,143,176,.06) 60px 64px);}
   body.light #loading{background:radial-gradient(circle at 50% 38%,rgba(10,143,176,.14),transparent 60%),linear-gradient(160deg,#dfeaf6,#c4d6ec);}
+  #tutPu{position:absolute;inset:0;z-index:16;pointer-events:none;}
+  #tutPu.hidden{display:none;}
+  #tutPuIcon{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-size:84px;
+    filter:drop-shadow(0 0 24px rgba(34,224,255,.7));animation:tutPuPulse 1.4s ease-in-out infinite;}
+  @keyframes tutPuPulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.12)}}
+  #tutHand{position:absolute;font-size:46px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));
+    animation:tutHandMove 1.5s ease-in-out infinite;}
+  @keyframes tutHandMove{0%{transform:translate(-40px,40px) scale(1)}60%{transform:translate(0,0) scale(.86)}100%{transform:translate(-40px,40px) scale(1)}}
+  #gridBuyBtn{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:9;
+    font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;
+    padding:10px 22px;border-radius:8px;border:1px solid var(--cyan);cursor:pointer;
+    background:linear-gradient(180deg,rgba(34,224,255,.18),rgba(34,224,255,.08));
+    color:var(--cyan);box-shadow:0 0 18px rgba(34,224,255,.25);transition:opacity .3s;}
+  #gridBuyBtn.hidden{display:none;}
+  #gridBuyBtn.faded{opacity:0.38;filter:grayscale(.4);}
+  #gridBuyBtn.bought{animation:gridBuyPop .5s cubic-bezier(.2,1.6,.4,1);}
+  #gridBuyBtn.pulse{animation:gridAffordPulse 1.8s cubic-bezier(.2,1.4,.4,1);}
+  @keyframes gridAffordPulse{0%{transform:translateX(-50%) scale(1)}15%{transform:translateX(-50%) scale(1.32)}35%{transform:translateX(-50%) scale(.92)}55%{transform:translateX(-50%) scale(1.18)}75%{transform:translateX(-50%) scale(.97)}100%{transform:translateX(-50%) scale(1)}}
+  @keyframes gridBuyPop{0%{transform:translateX(-50%) scale(1)}30%{transform:translateX(-50%) scale(.78)}65%{transform:translateX(-50%) scale(1.22)}100%{transform:translateX(-50%) scale(1)}}
+  #placeMsg{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);z-index:9;
+    font-family:'Chakra Petch',sans-serif;font-size:13px;letter-spacing:2px;
+    color:var(--amber);background:var(--ov-bg);padding:8px 18px;border-radius:8px;
+    border:1px solid var(--amber);box-shadow:0 0 12px rgba(255,181,36,.3);
+    animation:puIn .3s both;white-space:nowrap;}
+  #placeMsg.hidden{display:none;}
+  body.light #gridBuyBtn{background:linear-gradient(180deg,rgba(10,143,176,.18),rgba(10,143,176,.07));}
+  body.light #placeMsg{background:rgba(240,246,252,.92);}
 </style>
 </head>
 <body>
@@ -220,7 +256,7 @@
   <div id="hud">
     <div class="hud-block" id="scoreBlock"><span class="hud-label">💵 Cash</span><span class="hud-val" id="score" style="color:var(--amber);text-shadow:0 0 10px rgba(255,181,36,.45)">$0</span></div>
     <div class="hud-block" id="timeBlock"><span class="hud-label">Time</span><span class="hud-val" id="time">0:00</span></div>
-    <div class="hud-block"><span class="hud-label">Lives</span><span class="hud-val" id="lives">❤❤❤</span></div>
+    <div class="hud-block"><span class="hud-label">Chances</span><span class="hud-val" id="lives">⚡⚡⚡</span></div>
     <div style="display:flex;gap:6px">
       <button class="iconbtn" id="muteBtn" title="Sound">🔊</button>
       <button class="iconbtn" id="menuBtn" title="Menu">⏸</button>
@@ -237,19 +273,21 @@
     <span class="pu-bar"><span class="pu-bar-fill" id="puBarFill"></span></span>
   </button>
   <div id="introHL" class="hidden"></div>
+  <button id="gridBuyBtn" class="hidden">⚡ Grid  $600</button>
+  <div id="placeMsg" class="hidden">Tap anywhere to place your new grid</div>
+  <!-- grid mechanic tutorial overlay -->
+  <div id="mechTut" class="hidden" style="position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.88);gap:0;">
+    <canvas id="mechTutCv" style="display:block;max-width:320px;max-height:360px;"></canvas>
+    <p id="mechTutLabel" style="font-family:'Chakra Petch',sans-serif;font-size:13px;letter-spacing:2px;color:#22e0ff;margin:14px 0 18px;text-align:center;padding:0 24px;line-height:1.6;"></p>
+    <button id="mechTutBtn" class="btn" style="font-size:14px;padding:12px 36px;">Got it</button>
+  </div>
+  <canvas id="tutDemoCv" class="hidden" style="position:absolute;inset:0;z-index:21;pointer-events:none;"></canvas>
   <div class="hidden" id="coach">
     <div id="coachText"></div>
     <div class="row" id="coachRow"></div>
   </div>
 
   <!-- MANAGER DIALOGUE -->
-  <div class="hidden" id="mgr">
-    <div class="mgr-card">
-      <canvas id="mgrPortrait" width="120" height="120"></canvas>
-      <div class="mgr-name">RAY VOLTRIN<span>Grid Operations Mgr.</span></div>
-      <div class="mgr-text" id="mgrText"></div>
-      <button class="btn" id="mgrBtn">Got it</button>
-    </div>
   </div>
 
   <!-- START -->
@@ -263,7 +301,7 @@
     </div>
     <button class="btn reveal r4" id="startBtn">▶ Energize the City</button>
     <button class="btn ghost reveal r4" id="howBtn" style="animation-delay:.85s">❓ How to Play</button>
-    <div class="reveal r4" style="animation-delay:1s;margin-top:16px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px">v2.4.5</div>
+    <div class="reveal r4" style="animation-delay:1s;margin-top:16px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px">v2.7.8</div>
   </div>
 
   <!-- HOW TO PLAY -->
@@ -274,7 +312,7 @@
       <div class="item"><span class="ic">👆</span><span class="tx"><b>Tap a building</b> to run a wire and charge it. Tap again to send <b>more power</b> — it fills faster.</span></div>
       <div class="item"><span class="ic">🔋</span><span class="tx">Every building drains over time. Some fast (factories), some slow (houses). Don't let the bar hit <b>zero</b>.</span></div>
       <div class="item"><span class="ic">📊</span><span class="tx">Each grid powers only a few at once (the <b>X/Y</b> on it). When one's full, divert supply to one running low.</span></div>
-      <div class="item"><span class="ic">❤️</span><span class="tx">3 lives. A blackout costs one (hospital costs <b>2</b>). Fill a <b>Power Cell</b> for +1 life.</span></div>
+      <div class="item"><span class="ic">⚡</span><span class="tx">3 chances. A blackout costs one (hospital costs <b>2</b>). Fill a <b>Power Cell</b> for +1 chance.</span></div>
       <div class="item"><span class="ic">🏆</span><span class="tx">Survive as long as you can. A 2nd grid and more buildings arrive as you go.</span></div>
     </div>
     <div class="btnrow">
@@ -328,12 +366,16 @@ let W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2);
 let theme=(()=>{try{return localStorage.getItem('pgp_theme')||'dark'}catch(e){return 'dark'}})();
 const TH={}; // canvas color tokens, refreshed from CSS
 function readTheme(){
-  const cs=getComputedStyle(document.body);
-  const g=k=>cs.getPropertyValue(k).trim();
+  const cs=getComputedStyle(document.body),g=k=>cs.getPropertyValue(k).trim();
   TH.bg=g('--c-bg');TH.world=g('--c-world');TH.gridline=g('--c-gridline');TH.zone=g('--c-zone');
   TH.unitbody=g('--c-unitbody');TH.unitdark=g('--c-unitdark');TH.gridbody=g('--c-gridbody');
   TH.text=g('--text');TH.muted=g('--muted');TH.cyan=g('--cyan');TH.amber=g('--amber');
-  TH.green=g('--green');TH.red=g('--red');TH.yellow=g('--yellow');
+  TH.green=g('--green');TH.red=g('--red');TH.yellow=g('--yellow');TH.panel=g('--panel');
+  TH.wireGlow=g('--c-wire-glow');TH.wireDot=g('--c-wire-dot');
+  TH.mgrBg=`linear-gradient(180deg,${g('--c-mgr-bg1')},${g('--c-mgr-bg2')})`;
+  TH.portraitBg=g('--c-portrait-bg');TH.fpsBg=g('--c-fps-bg');
+  TH.expandSub=g('--c-expand-sub');
+  TH.pctOutline=g('--c-pct-outline');TH.pctText=g('--c-pct-text');TH.puBody=g('--c-puBody');
 }
 function applyTheme(){
   document.body.classList.toggle('light',theme==='light');
@@ -425,44 +467,68 @@ let cam={s:1,x:0,y:0, ts:1,tx:0,ty:0}; // current + target scale/offset
 let camAnim=0,expandFlash=0;
 // World matches the available viewport aspect ratio so it always fills the screen
 // (no letterboxing). Its AREA scales with the number of grids, and grids are
-// arranged in a row/col grid chosen to suit the aspect — keeping units large.
-function playAspect(){
-  // available play area = full canvas (HUD overlaps top but world is centered/contained)
-  return (W>0&&H>0)?W/H:1;
-}
-function gridArrangement(n,aspect){
-  // choose cols×rows whose shape best matches the viewport aspect
-  let best=null;
-  for(let cols=1;cols<=n;cols++){
-    const rows=Math.ceil(n/cols);
-    const cellAspect=aspect*(rows/cols);     // shape of each grid cell if we use cols×rows
-    const score=Math.abs(Math.log(cellAspect)); // closest to square-ish cell = best tap area
-    if(!best||score<best.score)best={cols,rows,score};
+// ── BUBBLE ZONE LAYOUT ─────────────────────────────────────────────────────
+const ZONE_R_BASE=192; // reference zone radius — sized to fit 6 units with gap=84
+let ZONE_R=ZONE_R_BASE; // recalculated each layout call based on screen size
+
+function getBubbleCenters(n){
+  const R=ZONE_R,h=R*Math.sqrt(3);
+  const portrait=H>=W; // stack vertically in portrait, horizontally in landscape
+  let raw;
+  if(portrait){
+    raw=({
+      1:[[0,0]],
+      2:[[0,-R],[0,R]],                                          // vertical stack
+      3:[[0,-h*.667],[-R,h*.333],[R,h*.333]],
+      4:[[-R,-R],[R,-R],[-R,R],[R,R]],
+      5:[[-R,-h],[R,-h],[0,0],[-R,h],[R,h]],                    // 2+1+2 vertical
+      6:[[-R,-h],[R,-h],[-R,0],[R,0],[-R,h],[R,h]],             // 2+2+2 columns
+      7:[[-R,-h],[R,-h],[-2*R,0],[-R,0],[R,0],[-R,h],[R,h]],
+      8:[[-R,-h],[R,-h],[-2*R,0],[-R,0],[R,0],[2*R,0],[-R,h],[R,h]],
+      9:[[-R,-h],[R,-h],[-2*R,0],[-R,0],[0,0],[R,0],[2*R,0],[-R,h],[R,h]],
+      10:[[-R,-h],[R,-h],[-2*R,0],[-R,0],[0,0],[R,0],[2*R,0],[-2*R,h],[-R,h],[R,h]],
+    }[n]||[[0,0]]).map(([x,y])=>({x,y}));
+  } else {
+    raw=({
+      1:[[0,0]],
+      2:[[-R,0],[R,0]],                                          // horizontal
+      3:[[-R,0],[R,0],[0,h*.667]],
+      4:[[-R,-R],[R,-R],[-R,R],[R,R]],
+      5:[[-2*R,-h*.5],[0,-h*.5],[2*R,-h*.5],[-R,h*.5],[R,h*.5]],
+      6:[[-2.5*R,-h*.5],[-0.5*R,-h*.5],[1.5*R,-h*.5],[-1.5*R,h*.5],[0.5*R,h*.5],[2.5*R,h*.5]],
+      7:[[-3*R,-h*.5],[-R,-h*.5],[R,-h*.5],[3*R,-h*.5],[-2*R,h*.5],[0,h*.5],[2*R,h*.5]],
+      8:[[-3.5*R,-h*.5],[-1.5*R,-h*.5],[0.5*R,-h*.5],[2.5*R,-h*.5],[-2.5*R,h*.5],[-0.5*R,h*.5],[1.5*R,h*.5],[3.5*R,h*.5]],
+      9:[[-2*R,-h],[0,-h],[2*R,-h],[-3*R,0],[-R,0],[R,0],[3*R,0],[-2*R,h],[0,h]],
+      10:[[-2*R,-h],[0,-h],[2*R,-h],[-3*R,0],[-R,0],[R,0],[3*R,0],[-2*R,h],[0,h],[2*R,h]],
+    }[n]||[[0,0]]).map(([x,y])=>({x,y}));
   }
-  return best;
+  const cx=raw.reduce((s,p)=>s+p.x,0)/raw.length;
+  const cy=raw.reduce((s,p)=>s+p.y,0)/raw.length;
+  return raw.map(p=>({x:p.x-cx,y:p.y-cy}));
 }
-function worldTierFor(nGrids){
-  const n=Math.max(1,nGrids);
-  const aspect=playAspect();
-  const arr=gridArrangement(n,aspect);
-  // each grid "cell" gets a roughly fixed world area; world matches viewport aspect
-  const cellSize=620;                         // world units per grid cell (controls zoom level)
-  // base the larger world dimension on the cell grid, then force viewport aspect
-  const colsExtent=arr.cols*cellSize, rowsExtent=arr.rows*cellSize;
-  // pick world so it contains the cell layout AND matches screen aspect (fill, no letterbox)
-  let ww=colsExtent, wh=rowsExtent;
-  const wAspect=ww/wh;
-  if(wAspect<aspect) ww=wh*aspect; else wh=ww/aspect;
-  return {ww,wh,cols:arr.cols,rows:arr.rows};
-}
-function setWorldTarget(){
-  const tier=worldTierFor(grids.length);
-  WW=tier.ww;WH=tier.wh;WCOLS=tier.cols;WROWS=tier.rows;
+
+function layoutBubbles(){
+  const n=grids.length;if(!n)return;
+  // Scale ZONE_R with short edge of screen so units stay tappable at all sizes
+  const shortEdge=Math.min(W,H);
+  ZONE_R=Math.round(Math.max(110,Math.min(ZONE_R_BASE,shortEdge*0.47)));
+  const centers=getBubbleCenters(n);
+  const R=ZONE_R,pad=R*0.12;
+  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+  for(const c of centers){minX=Math.min(minX,c.x-R);maxX=Math.max(maxX,c.x+R);minY=Math.min(minY,c.y-R);maxY=Math.max(maxY,c.y+R);}
+  const topPad=R*0.32;
+  minX-=pad;maxX+=pad;minY-=(pad+topPad);maxY+=pad;
+  const ox=-minX,oy=-minY;
+  WW=maxX-minX;WH=maxY-minY;
+  for(let i=0;i<n;i++){grids[i].x=centers[i].x+ox;grids[i].y=centers[i].y+oy;}
   fitCamera(true);
 }
+
+function setWorldTarget(){layoutBubbles();}
+function gridArrangement(n){return {cols:Math.ceil(Math.sqrt(n)),rows:Math.ceil(n/Math.ceil(Math.sqrt(n)))};} // compat shim
+
 function fitCamera(animate){
-  // world aspect == viewport aspect, so cover the whole screen (no wasted bands)
-  const s=Math.max(W/WW,H/WH);
+  const s=Math.min(W/WW,H/WH);  // fit (not cover) — no empty bands since world matches screen
   const tx=(W-WW*s)/2, ty=(H-WH*s)/2;
   cam.ts=s;cam.tx=tx;cam.ty=ty;
   if(animate){camAnim=1;} else {cam.s=s;cam.x=tx;cam.y=ty;}
@@ -484,14 +550,12 @@ function resize(){
   const oldWW=WW,oldWH=WH;
   W=r.width;H=r.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
   if(grids.length){
-    // recompute world to match new viewport aspect
-    const tier=worldTierFor(grids.length);
-    // rescale existing unit positions from old world to new world
-    if(oldWW>0&&oldWH>0){const sx=tier.ww/oldWW,sy=tier.wh/oldWH;
-      for(const u of units){u.x*=sx;u.y*=sy;}
-      if(powerup){powerup.x*=sx;powerup.y*=sy;powerup.tx*=sx;}}
-    WW=tier.ww;WH=tier.wh;WCOLS=tier.cols;WROWS=tier.rows;
-    layoutGrids();relax();assignAll();fitCamera(false);buildBG();
+    if(oldWW>0&&oldWH>0){
+      // rescale unit positions proportionally before re-layout
+      layoutBubbles(); // recalculates WW/WH and grid positions
+      fitCamera(false);
+    } else {layoutBubbles();fitCamera(false);}
+    relax();assignAll();buildBG();
   }
 }
 let bgCanvas=null;
@@ -514,24 +578,28 @@ function buildBG(){
   drawZoneLabels(b);
 }
 function relax(){
-  const vw=visibleWorld();
-  const ti=topInsetWorld(),bi=botInsetWorld();
-  const pad=BASE_UR+26;                 // breathing room from screen edges
-  const xMin=vw.x0+pad,xMax=vw.x1-pad;
-  const yMin=vw.y0+ti+pad,yMax=vw.y1-bi-pad;
-  for(let it=0;it<22;it++){
+  for(let it=0;it<26;it++){
     for(let i=0;i<units.length;i++){
-      const a=units[i];
-      for(const g of grids){const dx=a.x-g.x,dy=a.y-g.y,d=Math.hypot(dx,dy)||1,min=gridR(g)+a.r+40;
-        if(d<min){const k=(min-d)/d;a.x+=dx*k;a.y+=dy*k;}}
+      const u=units[i];const g=grids[u.gi];if(!g)continue;
+      // clamp inside bubble zone
+      const dx=u.x-g.x,dy=u.y-g.y,dist=Math.hypot(dx,dy)||1;
+      const maxD=ZONE_R-u.r-14;
+      if(dist>maxD){const k=(dist-maxD)/dist;u.x-=dx*k;u.y-=dy*k;}
+      // push away from grid center
+      const mn=gridR(g)+u.r+36;if(dist<mn){const k=(mn-dist)/dist;u.x+=dx*k;u.y+=dy*k;}
+      // unit-unit repulsion
       for(let j=i+1;j<units.length;j++){
-        const b=units[j],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,min=a.r+b.r+48;
-        if(d<min){const k=(min-d)/d/2;a.x-=dx*k;a.y-=dy*k;b.x+=dx*k;b.y+=dy*k;}}
-      a.x=Math.min(xMax,Math.max(xMin,a.x));a.y=Math.min(yMax,Math.max(yMin,a.y));
+        const b=units[j],dx2=b.x-u.x,dy2=b.y-u.y,d2=Math.hypot(dx2,dy2)||1,mn2=u.r+b.r+Math.round(ZONE_R*0.44);
+        if(d2<mn2){const k=(mn2-d2)/d2/2;u.x-=dx2*k;u.y-=dy2*k;b.x+=dx2*k;b.y+=dy2*k;}
+      }
+      // re-clamp after repulsion
+      const dx3=u.x-g.x,dy3=u.y-g.y,d3=Math.hypot(dx3,dy3)||1;
+      if(d3>maxD){const k=(d3-maxD)/d3;u.x-=dx3*k;u.y-=dy3*k;}
     }
   }
 }
 window.addEventListener('resize',resize);
+window.addEventListener('orientationchange',()=>setTimeout(resize,150));
 
 /* ============ TYPES / NAMES ============ */
 const TYPES={
@@ -546,10 +614,10 @@ const TYPES={
 const START_TYPES=['house','office','factoryS','mall','factoryL'];
 const HOUSE_FILL=100, MALL_FILL=100, IND_FILL=100; // base capacity reference
 const POWERUPS={
-  slowmo:{label:'Slow-Mo',icon:'🐢',max:HOUSE_FILL*2,color:'#7cf0ff',dur:5,desc:'Halves all drain for 5s',cost:400},
-  freeze:{label:'Freeze',icon:'❄️',max:HOUSE_FILL*3,color:'#9fd8ff',dur:5,desc:'Freezes all drain for 5s',cost:650},
-  chargeall:{label:'Charge All',icon:'⚡',max:IND_FILL*2.5,color:'#ffe14d',desc:'Instantly charges every unit',cost:900},
-  heartpu:{label:'Power Cell',icon:'❤️',max:MALL_FILL*3,color:'#22e0ff',desc:'+1 life',cost:1200},
+  slowmo:{label:'Slow-Mo',icon:'🐢',max:HOUSE_FILL*2,color:'#7cf0ff',dur:5,desc:'Halves all drain for 5s',cost:132},
+  freeze:{label:'Freeze',icon:'❄️',max:HOUSE_FILL*3,color:'#9fd8ff',dur:5,desc:'Freezes all drain for 5s',cost:204},
+  chargeall:{label:'Charge All',icon:'⚡',max:IND_FILL*2.5,color:'#ffe14d',desc:'Instantly charges every unit',cost:312},
+  heartpu:{label:'Power Cell',icon:'❤️',max:MALL_FILL*3,color:'#22e0ff',desc:'+1 life',cost:510},
 };
 const MONEY_PER_SEC=100; // game-over: this much leftover money = +1 second
 const SUR=['Jones','Rivera','Chen','Okafor','Müller','Patel','Smith','Garcia','Kim','Novak','Haddad','Sato'];
@@ -574,17 +642,23 @@ function genName(type){
 
 const FILL=34,MAXB=100;
 let state='start';
-let units=[],grids=[],lives=3,t=0,nextUnitAt=10,hospitalAdded=false,nextHeartAt=80;
+let units=[],grids=[],lives=3,t=0,nextUnitAt=60,hospitalAdded=false,nextHeartAt=80;
 let lastCapStep=0,toastTimer=0,flashT=0,shakeT=0,deathT=0,lastMin=0,coachH=0;
 let score=0,combo=1,scorePops=[],darkPops=[];
+let tutHintCount=0,tutHintUnit=null,tutHintTimer=0; // 3-time unit tap hint
 let hiScore=(()=>{try{return +localStorage.getItem('pgp_hi')||0}catch(e){return 0}})();
 function showHi(){$('hiscore').textContent=hiScore>0?fmt(hiScore):'—';}
 
-function diff(){return 1+1.15*Math.min(t/600,1);}
+function diff(){
+  // stays at 1.0 until 3 min, then ramps to 2.0 by 12 min
+  const rampStart=180, rampEnd=720;
+  if(t<=rampStart)return 1.0;
+  return 1.0+Math.min(1,( t-rampStart)/(rampEnd-rampStart));
+}
 
 /* ============ POWER-UPS ============ */
 let powerup=null,nextPuAt=70,fxSlow=0,fxFreeze=0,chargeAllAnim=0,introSlow=false;
-let puBtn=null,nextBtnAt=35; // floating buy-button
+let puBtn=null,nextBtnAt=90; // floating buy-button (first at 1.5min)
 function spawnPowerup(type){
   const def=POWERUPS[type],r=BASE_UR*1.15;
   const px=r+20;
@@ -608,7 +682,7 @@ function activatePowerup(p){
   scorePops.push({x:p.x,y:p.y-p.r-10,txt:'+'+money(Math.round(60*combo)),life:1.0});
   powerup=null;
 }
-function maybeIntro(type){ triggerIntro(type); }
+function maybeIntro(type){ }
 /* ----- floating buy-button (top-right) ----- */
 const BTN_LIFE=5;
 function spawnPuBtn(type){
@@ -619,8 +693,6 @@ function spawnPuBtn(type){
   $('puBarFill').style.width='100%';
   $('puBtn').classList.remove('hidden');
   SFX.newUnit();
-  // intro for this power-up the first time; highlight the buy-button itself
-  if(!introSeen[type]) triggerIntro(type,{dom:'puBtn'});
 }
 function hidePuBtn(){puBtn=null;$('puBtn').classList.add('hidden');$('puBtn').classList.remove('cant','active');}
 function updatePuBtn(dt){
@@ -654,72 +726,7 @@ function buyPuBtn(){
   }
 }
 
-/* ============ MANAGER INTROS ============ */
-const INTROS={
-  hospital:"New hospital just came online. Critical load — if it ever goes dark, that's TWO lives gone, not one. Keep it fed, no exceptions.",
-  slowmo:"See that token drifting in? That's a Slow-Mo cell. Charge it up like any building and it'll cut the whole city's drain in half for a few seconds. Breathing room when you need it.",
-  freeze:"Freeze cell incoming. Fill it and the entire grid stops draining cold for five seconds. Best move when you're drowning — buys you time to catch up.",
-  chargeall:"Big one here — Charge All. Costs a lot of juice to fill, but the instant it's full, every single building tops right off. Save it for when everything's screaming red.",
-  heartpu:"Spotted a Power Cell. Charge it fully and we get an extra life back on the board. Pricey, but worth it before things get hairy.",
-  grid2:"Second charging grid is live! More grids means more buildings powered at once. They'll keep coming as the city grows.",
-};
-let introSeen=(()=>{try{return JSON.parse(localStorage.getItem('pgp_intros')||'{}')}catch(e){return {}}})();
-let typeTimer=null,introResume=null,introHL=null;
-function triggerIntro(key,hl){
-  if(introSeen[key]||state!=='play')return;
-  introSeen[key]=1;try{localStorage.setItem('pgp_intros',JSON.stringify(introSeen))}catch(e){}
-  state='intro';                       // ALL dialogues fully pause the game
-  introResume='pause';
-  introHL=null;
-  $('introHL').classList.remove('hidden');   // dim the game behind the dialogue
-  SFX.btn();drawPortrait();
-  $('mgr').classList.remove('hidden');requestAnimationFrame(()=>$('mgr').classList.add('show'));
-  typewrite(INTROS[key]||'');
-}
-function typewrite(txt){
-  const el=$('mgrText');el.innerHTML='';let i=0;
-  if(typeTimer)clearInterval(typeTimer);
-  typeTimer=setInterval(()=>{
-    i++;el.innerHTML=txt.slice(0,i)+'<span class="cursor">▍</span>';
-    if(i%2===0)SFX.tap();
-    if(i>=txt.length){clearInterval(typeTimer);typeTimer=null;el.innerHTML=txt;}
-  },22);
-}
-function closeIntro(){
-  SFX.btn();
-  if(typeTimer){clearInterval(typeTimer);typeTimer=null;}
-  $('mgr').classList.remove('show');
-  $('introHL').classList.add('hidden');
-  setTimeout(()=>$('mgr').classList.add('hidden'),320);
-  if(introResume==='pause'){state='play';last=performance.now();startLoop();}
-  introSlow=false;introResume=null;introHL=null;
-}
-function drawPortrait(){
-  const c=$('mgrPortrait'),x=c.getContext('2d'),W2=120,H2=120;
-  x.clearRect(0,0,W2,H2);
-  // bg
-  x.fillStyle='#081019';x.fillRect(0,0,W2,H2);
-  // shoulders (suit)
-  x.fillStyle='#16314a';x.beginPath();x.moveTo(20,120);x.quadraticCurveTo(60,78,100,120);x.fill();
-  // suit lapels
-  x.fillStyle='#0e2236';x.beginPath();x.moveTo(60,86);x.lineTo(46,120);x.lineTo(60,120);x.fill();
-  x.beginPath();x.moveTo(60,86);x.lineTo(74,120);x.lineTo(60,120);x.fill();
-  // tie (cyan)
-  x.fillStyle='#22e0ff';x.beginPath();x.moveTo(60,88);x.lineTo(55,104);x.lineTo(60,118);x.lineTo(65,104);x.fill();
-  // neck
-  x.fillStyle='#d9a574';x.fillRect(53,72,14,16);
-  // head
-  x.fillStyle='#e8b98a';x.beginPath();x.arc(60,52,24,0,7);x.fill();
-  // hair
-  x.fillStyle='#2a2320';x.beginPath();x.arc(60,44,24,Math.PI,0);x.fill();x.fillRect(36,40,48,8);
-  // eyes
-  x.fillStyle='#10202e';x.beginPath();x.arc(51,52,2.4,0,7);x.fill();x.beginPath();x.arc(69,52,2.4,0,7);x.fill();
-  // smile
-  x.strokeStyle='#9c6b45';x.lineWidth=2;x.beginPath();x.arc(60,58,8,0.15*Math.PI,0.85*Math.PI);x.stroke();
-  // hard-hat hint (small badge) - operator vibe
-  x.fillStyle='#ffb524';x.fillRect(44,30,32,7);x.fillStyle='#0a1322';x.font="bold 6px sans-serif";x.textAlign='center';x.fillText('GRID',60,36);
-}
-
+/* ============ MANAGER INTROS ============ */let typeTimer=null,introResume=null,introHL=null;
 function updatePowerup(dt){
   if(chargeAllAnim>0){
     chargeAllAnim-=dt;   // fill is applied per-unit in the main loop (beats drain)
@@ -756,45 +763,24 @@ const ZONES=[
 ];
 function zoneCount(){return Math.max(1,grids.length);}
 function drawZoneLabels(b){
-  const n=zoneCount(),ti=topInsetWorld(),uh=Math.max(1,WH-ti);
-  for(let i=0;i<n;i++){
-    const col=i%WCOLS, row=Math.floor(i/WCOLS);
-    const cx=((col+0.5)/WCOLS)*WW, top=ti+(row/WROWS)*uh;
-    b.save();b.globalAlpha=0.5;b.fillStyle=TH.zone||'#1d3a5c';
-    b.font="700 22px 'Chakra Petch'";b.textAlign='center';b.textBaseline='middle';
-    b.fillText(ZONES[i%ZONES.length].name,cx,top+30);
-    b.restore();
+  for(let i=0;i<grids.length;i++){
+    const g=grids[i];
+    b.save();b.globalAlpha=0.3;b.fillStyle=TH.zone||'#1d3a5c';
+    b.font="700 18px 'Chakra Petch'";b.textAlign='center';b.textBaseline='middle';
+    b.fillText(ZONES[i%ZONES.length].name,g.x,g.y-ZONE_R+28);b.restore();
+    // draw zone circle outline on BG canvas
+    b.save();b.globalAlpha=0.12;b.strokeStyle=TH.zone||'#16314a';b.lineWidth=2;b.setLineDash([8,12]);
+    b.beginPath();b.arc(g.x,g.y,ZONE_R,0,Math.PI*2);b.stroke();b.setLineDash([]);b.restore();
   }
-  b.save();b.globalAlpha=0.4;b.strokeStyle=TH.zone||'#16314a';b.lineWidth=2;b.setLineDash([6,10]);
-  for(let c=1;c<WCOLS;c++){b.beginPath();b.moveTo((c/WCOLS)*WW,ti);b.lineTo((c/WCOLS)*WW,WH);b.stroke();}
-  for(let r=1;r<WROWS;r++){b.beginPath();b.moveTo(0,ti+(r/WROWS)*uh);b.lineTo(WW,ti+(r/WROWS)*uh);b.stroke();}
-  b.setLineDash([]);b.restore();
 }
 
-function gridCell(i){const col=i%WCOLS, row=Math.floor(i/WCOLS);return {col,row};}
 function gridR(g){return GRID_UR*(1+0.22*(g.cap-1));}
-function topInsetWorld(){return (62/Math.max(0.15,cam.ts||cam.s||1));} // HUD height in world units
-function botInsetWorld(){return ((28+(state==='tutorial'?coachH:0))/Math.max(0.15,cam.ts||cam.s||1));} // bottom margin (+ coach bar in tutorial)
-// visible world rectangle (fill-camera can crop one axis); everything must stay inside this
+function topInsetWorld(){return(62/Math.max(0.15,cam.ts||cam.s||1));}
 function visibleWorld(){
-  const s=cam.ts||cam.s||1, ox=cam.tx!==undefined?cam.tx:cam.x, oy=cam.ty!==undefined?cam.ty:cam.y;
-  const x0=Math.max(0,(0-ox)/s), y0=Math.max(0,(0-oy)/s);
-  const x1=Math.min(WW,(W-ox)/s), y1=Math.min(WH,(H-oy)/s);
-  return {x0,y0,x1,y1,w:x1-x0,h:y1-y0};
+  const s=cam.ts||cam.s||1,ox=cam.tx!==undefined?cam.tx:cam.x,oy=cam.ty!==undefined?cam.ty:cam.y;
+  return {x0:Math.max(0,(0-ox)/s),y0:Math.max(0,(0-oy)/s),x1:Math.min(WW,(W-ox)/s),y1:Math.min(WH,(H-oy)/s)};
 }
-function layoutGrids(){
-  const n=grids.length;
-  const vw=visibleWorld();
-  const ti=topInsetWorld(),bi=botInsetWorld();
-  const top=Math.max(vw.y0,0)+ti, usableH=Math.max(1,(vw.y1-vw.y0)-ti-bi);
-  const left=vw.x0, usableW=Math.max(1,vw.x1-vw.x0);
-  for(let i=0;i<n;i++){
-    const g=grids[i];const{col,row}=gridCell(i);
-    g.x=left+((col+0.5)/WCOLS)*usableW;
-    g.y=top+((row+0.5)/WROWS)*usableH;
-  }
-}
-function addGrid(){grids.push({cap:2});setWorldTarget();layoutGrids();assignAll();buildBG();expandFlash=1.2;}
+function layoutGrids(){layoutBubbles();} // compat alias
 function nearestGrid(x,y){let bi=0,bd=1e9;grids.forEach((g,i)=>{const d=Math.hypot(g.x-x,g.y-y);if(d<bd){bd=d;bi=i;}});return bi;}
 function assignAll(){for(const u of units)u.gi=nearestGrid(u.x,u.y);}
 let gridUse=[];
@@ -808,45 +794,44 @@ function freeCap(i){return grids[i].cap-gridUsed(i);}
 function neededGrids(){return Math.floor((units.length-1)/5)+1;}
 
 /* ============ UNITS ============ */
+const UNITS_PER_GRID=6;  // max units per grid; stop spawning when all grids reach this
+
+function targetGridIdx(){
+  // spawn into the first grid (by index) that has fewer than UNITS_PER_GRID units
+  const counts=grids.map((_,i)=>units.filter(u=>u.gi===i).length);
+  for(let i=0;i<grids.length;i++){if(counts[i]<UNITS_PER_GRID)return i;}
+  return -1; // all grids full — caller should not spawn
+}
+
 function spawnUnit(type){
-  const def=TYPES[type];
-  const r=(def.big?1.22:1)*BASE_UR;
-  const vw=visibleWorld();
-  const ti=topInsetWorld(),bi=botInsetWorld();
-  const px=r+26;
-  const xMin=vw.x0+px, xMax=vw.x1-px, yTop=vw.y0+ti+r+26, yBot=vw.y1-bi-r-26;
-  // bias spawn toward the least-populated grid
-  let target=0,least=1e9;
-  grids.forEach((g,i)=>{const c=units.filter(u=>u.gi===i).length;if(c<least){least=c;target=i;}});
-  const g0=grids[target]||{x:(vw.x0+vw.x1)/2,y:(vw.y0+vw.y1)/2};
-  const usableW=Math.max(1,vw.x1-vw.x0), usableH=Math.max(1,(vw.y1-vw.y0)-ti-bi);
-  const cellW=usableW/WCOLS, cellH=usableH/WROWS;
-  for(let n=0;n<160;n++){
-    // spread shrinks if we're struggling to place (keeps everything on-screen)
-    const spread=0.78*(1-n/320);
-    const x=Math.max(xMin,Math.min(xMax, g0.x+(Math.random()-0.5)*cellW*spread));
-    const y=Math.max(yTop,Math.min(yBot, g0.y+(Math.random()-0.5)*cellH*spread));
+  const def=TYPES[type];const r=(def.big?1.22:1)*BASE_UR;
+  const target=targetGridIdx();if(target<0)return false;
+  const g=grids[target];const maxDist=ZONE_R-r-18;const minDist=Math.min(gridR(g)+r+28, maxDist-10);
+  for(let n=0;n<180;n++){
+    const angle=Math.random()*Math.PI*2;
+    const dist=minDist+Math.random()*(maxDist-minDist);
+    const x=g.x+Math.cos(angle)*dist, y=g.y+Math.sin(angle)*dist;
     let ok=true;
-    for(const g of grids){if(Math.hypot(g.x-x,g.y-y)<gridR(g)+r+30){ok=false;break;}}
-    if(ok)for(const u of units){if(Math.hypot(u.x-x,u.y-y)<u.r+r+34){ok=false;break;}}
+    for(const g2 of grids){if(Math.hypot(g2.x-x,g2.y-y)<gridR(g2)+r+24){ok=false;break;}}
+    if(ok)for(const u of units){if(Math.hypot(u.x-x,u.y-y)<u.r+r+Math.round(ZONE_R*0.44)){ok=false;break;}}
     if(ok){
       const u={type,x,y,r,big:!!def.big,b:def.bonus?2:(def.max||MAXB),max:def.max||MAXB,
         dmul:def.bonus?1:(0.8+Math.random()*0.5),
-        links:0,dark:0,spawn:0,wiredAt:0,warned:false,name:genName(type)};
-      u.gi=nearestGrid(x,y);units.push(u);return true;
+        links:0,dark:0,spawn:0,wiredAt:0,warned:false,name:genName(type),gi:target,chargeStart:null};
+      units.push(u);return true;
     }
   }
   return false;
 }
 function reset(){
-  units=[];grids=[{cap:1}];lives=3;t=0;nextUnitAt=10;hospitalAdded=false;nextHeartAt=80;
+  units=[];grids=[{cap:1}];lives=3;t=0;nextUnitAt=60;hospitalAdded=false;nextHeartAt=80;
   lastCapStep=0;deathT=0;flashT=0;shakeT=0;lastMin=0;coachH=0;particles=[];
-  score=0;combo=1;scorePops=[];darkPops=[];lastScoreShown=-1;lastTimeShown='';lastLivesShown=-1;
-  $('toast').classList.remove('show');toastTimer=0;
-  powerup=null;nextPuAt=70;puBtn=null;nextBtnAt=35;$('puBtn').classList.add('hidden');fxSlow=0;fxFreeze=0;chargeAllAnim=0;introSlow=false;expandFlash=0;
-  $('mgr').classList.add('hidden');$('mgr').classList.remove('show');
+  score=0;combo=1;scorePops=[];darkPops=[];tutHintCount=0;tutHintUnit=null;tutHintTimer=0;lastScoreShown=-1;lastTimeShown='';lastLivesShown=-1;
+  $('toast').classList.remove('show','big');toastTimer=0;
+  powerup=null;nextPuAt=80;puBtn=null;nextBtnAt=90;$('puBtn').classList.add('hidden');hideGridBuyBtn();$('placeMsg').classList.add('hidden');placingGrid=false;holdGrid=null;holdProgress=0;holdWarnShown=false;gridAffordPulsed=false;fxSlow=0;fxFreeze=0;chargeAllAnim=0;introSlow=false;expandFlash=0;
   $('combo').classList.remove('show');$('black').style.opacity=0;
-  setWorldTarget();fitCamera(false);layoutGrids();buildBG();
+  resetMechTutFlags();$('mechTut').classList.add('hidden');
+  layoutBubbles();fitCamera(false);buildBG();
   ['house','office','factoryS'].forEach(spawnUnit);
   units.forEach((u,i)=>u.spawn=-i*0.35);
 }
@@ -859,37 +844,62 @@ function start(){
 function hideAllOverlays(){['start','menu','over','howto'].forEach(id=>$(id).classList.add('hidden'));}
 
 /* ============ MENU / OVER ============ */
-function pauseGame(){if(state!=='play')return;state='paused';SFX.btn();$('combo').classList.remove('show');silenceSpark();$('puBtn').classList.add('hidden');
+function pauseGame(){if(state!=='play')return;state='paused';SFX.btn();$('combo').classList.remove('show');silenceSpark();$('puBtn').classList.add('hidden');hideGridBuyBtn();cancelPlaceMode&&cancelPlaceMode();holdGrid=null;holdProgress=0;holdWarnShown=false;
   $('mCur').textContent=money(score);$('mBest').textContent=hiScore>0?fmt(hiScore):'0:00';$('menu').classList.remove('hidden');}
 function resumeGame(){if(state!=='paused')return;SFX.btn();$('menu').classList.add('hidden');state='play';refreshComboHud();if(puBtn)$('puBtn').classList.remove('hidden');startLoop();}
-function goHome(){SFX.btn();stopMusic();hideAllOverlays();state='start';$('start').classList.remove('hidden');showHi();}
+function goHome(){SFX.btn();stopMusic();hideAllOverlays();state='start';$('start').classList.remove('hidden');showHi();hideMechTut&&hideMechTut();}
 
 function beginDeath(){
-  state='dying';deathT=0;SFX.life();$('combo').classList.remove('show');silenceSpark();hidePuBtn();if(navigator.vibrate)navigator.vibrate([80,60,160]);
+  state='dying';deathT=0;SFX.life();$('combo').classList.remove('show');silenceSpark();hidePuBtn();hideGridBuyBtn();$('placeMsg').classList.add('hidden');placingGrid=false;holdGrid=null;holdProgress=0;holdWarnShown=false;
   units.forEach((u,i)=>{u.links=0;u.killAt=(i/Math.max(1,units.length))*1.4;});
   startLoop();
 }
 function gameOver(){
   state='over';
-  const bonusSec=Math.floor(score/MONEY_PER_SEC);
-  const finalTime=t+bonusSec;
+  const startCash=Math.floor(score);
+  const bonusSec=Math.floor(startCash/MONEY_PER_SEC);
+  const survT=Math.floor(t);
+  const finalTime=survT+bonusSec;
   const beat=finalTime>hiScore;
-  if(beat){hiScore=finalTime;try{localStorage.setItem('pgp_hi',Math.floor(hiScore))}catch(e){}}
-  if(beat){setTimeout(()=>SFX.high(),500);fireConfetti();} else {SFX.over();}
-  $('newBest').classList.toggle('hidden',!beat);
-  $('finalScore').textContent=fmt(finalTime);
-  $('oSurv').textContent=fmt(t);
-  $('oBonus').textContent='+'+fmt(bonusSec)+'  ('+money(score)+' left)';
-  $('oBest').textContent=fmt(hiScore);
-  const m=finalTime/60;let r='The city went dark.';
-  if(m>=10)r='Legendary grid operator. The city never noticed you sweating.';
-  else if(m>=7)r='Elite. You ran this city like clockwork.';
-  else if(m>=5)r='Solid shift — you beat the mid-game gauntlet.';
-  else if(m>=3)r='Getting there. The panic got real around now.';
-  else r='Warming up. Keep cycling that supply.';
-  $('rank').textContent=r;$('over').classList.remove('hidden');stopMusic();
+
+  $('oSurv').textContent=fmt(survT);
+  $('oBest').textContent=fmt(Math.max(hiScore,0));
+  $('newBest').classList.add('hidden');
+  $('rank').textContent='Tallying the books…';
+  $('over').classList.remove('hidden');stopMusic();SFX.over();
+
+  // animate: cash counts down, time counts up by the bonus
+  const dur=Math.min(1800,600+bonusSec*22);   // longer if more cash
+  const t0=performance.now();
+  let lastTick=0;
+  function anim(now){
+    let p=Math.min(1,(now-t0)/dur);
+    const ease=1-Math.pow(1-p,2);
+    const curCash=Math.round(startCash*(1-ease));
+    const curBonus=bonusSec-Math.floor(curCash/MONEY_PER_SEC);
+    $('finalScore').textContent=fmt(survT+curBonus);
+    $('oBonus').textContent='+'+fmt(curBonus)+'   💵 '+money(curCash)+' left';
+    if(now-lastTick>55&&curCash>0){lastTick=now;SFX.tap();}
+    if(p<1){requestAnimationFrame(anim);}
+    else{
+      $('finalScore').textContent=fmt(finalTime);
+      $('oBonus').textContent='+'+fmt(bonusSec)+'   💵 '+money(startCash)+' converted';
+      if(beat){hiScore=finalTime;try{localStorage.setItem('pgp_hi',Math.floor(hiScore))}catch(e){}
+        $('oBest').textContent=fmt(hiScore);$('newBest').classList.remove('hidden');
+        SFX.high();fireConfetti();}
+      const m=finalTime/60;let r='The city went dark.';
+      if(m>=10)r='Legendary grid operator. The city never noticed you sweating.';
+      else if(m>=7)r='Elite. You ran this city like clockwork.';
+      else if(m>=5)r='Solid shift — you beat the mid-game gauntlet.';
+      else if(m>=3)r='Getting there. The panic got real around now.';
+      else r='Warming up. Keep cycling that supply.';
+      $('rank').textContent=r;
+    }
+  }
+  requestAnimationFrame(anim);
 }
-function toast(msg){const e=$('toast');e.innerHTML=msg;e.classList.add('show');toastTimer=1.3;}
+function toast(msg){const e=$('toast');e.innerHTML=msg;e.classList.remove('big');e.classList.add('show');toastTimer=1.3;}
+function toastBig(msg){const e=$('toast');e.innerHTML=msg;e.classList.add('show','big');toastTimer=1.6;}
 
 /* ============ INPUT ============ */
 function hit(px,py){for(let i=units.length-1;i>=0;i--){const u=units[i];if(Math.hypot(u.x-px,u.y-py)<u.r+10)return u;}return null;}
@@ -906,76 +916,188 @@ function onTap(px,py){
     p.wiredAt=performance.now();return;
   }
   const u=hit(px,py);if(!u)return;
+  if(u===tutHintUnit){tutHintUnit=null;tutHintTimer=0;} // dismiss hint on tap
   if(u.b>=u.max-1||u.dark>0)return;
-  if(freeCap(u.gi)>0){u.links++;SFX.supply();}
+  // if this unit's grid is automated, ignore player tap (auto grid manages it)
+  if(grids[u.gi]&&grids[u.gi].auto){toast('🤖 Automated — managing itself');return;}
+  if(freeCap(u.gi)>0){if(!u.links)u.chargeStart=u.b;u.links++;SFX.supply();}
   else{
     const others=units.filter(x=>x!==u&&x.links>0&&x.gi===u.gi).sort((a,b)=>a.wiredAt-b.wiredAt);
-    if(others.length){others[0].links--;others[0].steal=0.6;u.links++;SFX.supply();}
+    if(others.length){others[0].links--;others[0].steal=0.6;if(!others[0].links)others[0].chargeStart=null;if(!u.links)u.chargeStart=u.b;u.links++;SFX.supply();}
     else toast('GRID AT CAPACITY');
   }
   u.wiredAt=performance.now();
 }
-cv.addEventListener('pointerdown',e=>{
-  if(!$('mgr').classList.contains('hidden'))return; // dialogue open: swallow stray taps
-  const r=cv.getBoundingClientRect();const w=screenToWorld(e.clientX-r.left,e.clientY-r.top);onTap(w.x,w.y);
+let lastMouse=null;
+cv.addEventListener('pointermove',e=>{
+  // cancel hold if finger moves away from grid
+  if(holdGrid){
+    const r=cv.getBoundingClientRect();const w=screenToWorld(e.clientX-r.left,e.clientY-r.top);
+    if(Math.hypot(holdGrid.g.x-w.x,holdGrid.g.y-w.y)>gridR(holdGrid.g)+14){
+      holdGrid=null;holdProgress=0;holdWarnShown=false;
+    }
+  }
+  if(!placingGrid)return;
+  const r=cv.getBoundingClientRect();lastMouse=screenToWorld(e.clientX-r.left,e.clientY-r.top);
 });
+cv.addEventListener('pointerdown',e=>{
+  if(state==='tutoverlay')return; // block taps during tutorial overlay
+  const r=cv.getBoundingClientRect();const w=screenToWorld(e.clientX-r.left,e.clientY-r.top);
+  // detect hold on a grid for upgrade
+  holdGrid=null;holdProgress=0;holdWarnShown=false;
+  for(let i=0;i<grids.length;i++){const g=grids[i];if(Math.hypot(g.x-w.x,g.y-w.y)<gridR(g)+10){holdGrid={g,i};break;}}
+  onTap(w.x,w.y);
+});
+cv.addEventListener('pointerup',()=>{holdGrid=null;holdProgress=0;holdWarnShown=false;});
+cv.addEventListener('pointercancel',()=>{holdGrid=null;holdProgress=0;holdWarnShown=false;});
 
-/* ============ PROGRESSION ============ */
+/* ============ GRID BUYING ============ */
+const GRID_BASE_COST=600;
+function gridBuyCost(){return Math.round(GRID_BASE_COST*Math.pow(1.7,grids.length-1));}
+function gridUpgradeCost(g){return g.cap===1?304:528;}
+
+let placingGrid=false;   // true while user is picking a spot to drop a new grid
+let gridBuyShown=false,gridAffordPulsed=false;
+let holdTimer=null,holdGrid=null,holdProgress=0,holdWarnShown=false;
+const HOLD_DURATION=1.2; // seconds to fill
+
+const GRID_AUTO_COST=400;
+
+function updateHold(dt){
+  if(!holdGrid)return;
+  const g=holdGrid.g;
+  holdProgress=Math.min(1,holdProgress+dt/HOLD_DURATION);
+  // at 50%: warn if can't afford
+  if(holdProgress>=0.5&&!holdWarnShown){
+    holdWarnShown=true;
+    const cost=g.cap>=3?GRID_AUTO_COST:gridUpgradeCost(g);
+    if(g.auto){toast('Grid already automated');SFX.low();}
+    else if(score<cost){toastBig('💸 Low balance — '+money(cost)+' needed');SFX.low();}
+  }
+  // at 100%: upgrade or automate
+  if(holdProgress>=1){
+    if(g.auto){/* already auto, nothing */}
+    else if(g.cap>=3){
+      // automate this grid
+      const cost=GRID_AUTO_COST;
+      if(score<cost){toast('Need '+money(cost)+' to automate this grid');SFX.low();}
+      else{
+        score-=cost;lastScoreShown=-1;g.auto=true;
+        SFX.expand();toast('🤖 Grid AUTOMATED — it charges units by itself!');
+        burst(g.x,g.y,{n:20,color:TH.amber||'#ffb524'});
+      }
+    } else {
+      const cost=gridUpgradeCost(g);
+      if(score<cost){toast('Not enough cash — need '+money(cost));SFX.low();}
+      else{
+        score-=cost;lastScoreShown=-1;g.cap++;
+        SFX.expand();toast('⚡ Grid upgraded to cap '+g.cap+'/3');
+        burst(g.x,g.y,{n:12,color:TH.cyan||'#22e0ff'});
+        if(g.cap===3)setTimeout(triggerAutomateTut,800); // show automate tutorial after first max upgrade
+      }
+    }
+    holdGrid=null;holdProgress=0;holdWarnShown=false;
+  }
+}
+
+function showGridBuyBtn(){
+  const cost=gridBuyCost();
+  const el=$('gridBuyBtn');
+  const canAfford=score>=cost&&grids.length<10;
+  el.textContent='⚡ Grid  '+money(cost);
+  el.classList.remove('hidden');
+  el.classList.toggle('faded',!canAfford);
+  // one-time scale pulse the first time player can afford the first grid
+  if(canAfford&&!gridAffordPulsed&&grids.length===1){
+    gridAffordPulsed=true;
+    el.classList.remove('pulse');void el.offsetWidth;
+    el.classList.add('pulse');
+    setTimeout(()=>el.classList.remove('pulse'),1850);
+  }
+  gridBuyShown=true;
+}
+function hideGridBuyBtn(){$('gridBuyBtn').classList.add('hidden');gridBuyShown=false;}
+function enterPlaceMode(){
+  const cost=gridBuyCost();
+  if(score<cost){
+    SFX.low();toastBig('💸 Low balance — need '+money(cost));return;
+  }
+  buyAndPlaceGrid();
+  // spring animation on button
+  const el=$('gridBuyBtn');
+  el.classList.remove('bought');void el.offsetWidth;  // reflow to restart
+  el.classList.add('bought');
+  setTimeout(()=>el.classList.remove('bought'),520);
+}
+function cancelPlaceMode(){placingGrid=false;$('placeMsg').classList.add('hidden');}
+function addGridBubble(free=false){
+  if(grids.length>=10){toast('Maximum 10 grids reached');return;}
+  if(!free){
+    const cost=gridBuyCost();
+    if(score<cost){SFX.low();return;}
+    score-=cost;lastScoreShown=-1;
+  }
+  grids.push({cap:1,x:0,y:0});
+  layoutBubbles();     // recalculates ALL bubble centers for N grids
+  assignAll();buildBG();
+  // spawn 2 units in the new zone
+  for(let k=0;k<2;k++)spawnUnit(pick(START_TYPES));
+  relax();
+  SFX.expand();
+}
+
+function buyAndPlaceGrid(){addGridBubble(false);}
+
+
 function progress(){
-  if(t>=nextUnitAt && units.length<maxUnits()){
+  if(t>=nextUnitAt && units.length<maxUnits()&&targetGridIdx()>=0){
     let type;
-    const isHosp=(t>140&&!hospitalAdded);
+    const isHosp=(t>200&&!hospitalAdded);
     if(isHosp){type='hospital';hospitalAdded=true;}
     else type=pick(START_TYPES);
     const ok=spawnUnit(type);if(ok)SFX.newUnit();
-    if(isHosp&&ok){const h=units[units.length-1];triggerIntro('hospital',{x:h.x,y:h.y,r:h.r});}
-    nextUnitAt=t+(t<120?11:(t<300?20:28));
+    if(isHosp&&ok){const h=units[units.length-1];}
+    nextUnitAt=t+(t<120?60:21); // phase1: 5 units in 2min; phase2: 5 units per 1.75min
   }
-  // grids scale with population; expands the world (zoom out). New grid brings +2 units.
-  if(grids.length<neededGrids()){
-    const first=grids.length===1;
-    addGrid();
-    for(let k=0;k<2&&units.length<maxUnits();k++)spawnUnit(pick(START_TYPES));
-    relax();
-    if(first){const g=grids[grids.length-1];triggerIntro('grid2',{x:g.x,y:g.y,r:gridR(g)});}
-    else{SFX.expand();}
-  }
-  if(t-lastCapStep>=34){            // faster cadence
-    lastCapStep=t;
-    const g=grids.filter(g=>g.cap<3).sort((a,b)=>a.cap-b.cap)[0]; // each grid maxes at 3
-    if(g){g.cap++;toast('⚡ SUPPLY CAPACITY UP');}
+  if(!placingGrid&&state==='play'&&t>80){
+    showGridBuyBtn();   // always show so player knows it exists (faded when unaffordable)
+  } else if(t<=80){
+    hideGridBuyBtn();
   }
   function puPool(){
     const early=['slowmo','freeze'];
     const late=t>=150?['chargeall','heartpu']:[];
     return (late.length&&Math.random()<0.5)?pick(late):pick(early);
   }
-  // chargeable token: rare (every 60-90s)
-  if(t>=nextPuAt && !powerup){
-    spawnPowerup(puPool());
-    nextPuAt=t+60+Math.random()*30;
-  }
-  // floating buy-button: frequent (every 35-50s), one at a time
-  if(t>=nextBtnAt && !puBtn){
-    spawnPuBtn(puPool());
-    nextBtnAt=t+35+Math.random()*15;
-  }
+  if(t>=nextBtnAt && !puBtn){spawnPuBtn(puPool());nextBtnAt=t+42+Math.random()*16;}
+  // check if player can first afford a grid upgrade
+  if(!upgradeTutTriggered&&grids.length>=1)checkUpgradeTutTrigger();
 }
 
 /* ============ LOOP ============ */
 let last=0,loopGen=0,fpsAccum=0,fpsFrames=0,fpsLast=0;
 function startLoop(){const g=++loopGen;last=performance.now();requestAnimationFrame(function step(now){if(g!==loopGen)return;loop(now,step);});}
 function loop(now,step){
-  if(state!=='play'&&state!=='dying'&&state!=='tutorial')return;
+  if(state!=='play'&&state!=='dying'&&state!=='tutorial'&&state!=='tutoverlay')return;
   let dt=(now-last)/1000;last=now;if(dt>0.05)dt=0.05;
   if(introSlow)dt*=0.25;
   if(state==='dying'){runDeath(dt);draw();requestAnimationFrame(step);return;}
-
+  if(state==='tutoverlay'){draw();requestAnimationFrame(step);return;}
   const demo=state==='tutorial';
   if(!demo){t+=dt;progress();const m=Math.floor(t/60);if(m>lastMin){lastMin=m;toast('🏆 '+m+' MINUTE'+(m>1?'S':'')+' SURVIVED!');}}
   recomputeGridUse();
+  // automated grids manage their own supply links each frame
+  if(!demo){
+    for(let gi=0;gi<grids.length;gi++){
+      const g=grids[gi];if(!g.auto)continue;
+      for(const u of units){if(u.gi===gi)u.links=0;}
+      const myUnits=units.filter(u=>u.gi===gi&&u.dark<=0&&u.b<u.max)
+                         .sort((a,b)=>a.b-b.b);
+      for(let i=0;i<Math.min(g.cap,myUnits.length);i++){myUnits[i].links=1;myUnits[i].wiredAt=performance.now();}
+    }
+  }
   if(fxSlow>0)fxSlow-=dt;if(fxFreeze>0)fxFreeze-=dt;
-  let drainMul=1;if(fxFreeze>0)drainMul=0;else if(fxSlow>0)drainMul=0.5;
+  let drainMul=0.60;if(fxFreeze>0)drainMul=0;else if(fxSlow>0)drainMul=0.30; // base pace = 60%
   if(expandFlash>0)drainMul=0;          // pause power loss during city-expansion banner
   const d=(demo?0.5:diff())*drainMul;
   for(let i=units.length-1;i>=0;i--){
@@ -985,11 +1107,12 @@ function loop(now,step){
     const csTarget=(u.links>0&&u.b<u.max)?1.3:1;u.cs=(u.cs||1)+(csTarget-(u.cs||1))*Math.min(1,dt*9);
     if(u.dark>0){u.dark-=dt;if(u.dark<=0)u.warned=false;continue;}
     if(chargeAllAnim>0)u.b=Math.min(u.max,u.b+u.max*dt/1.0); // top-up first, beats drain this frame
-    let rate=-def.drain*0.7*(u.dmul||1)*d;
+    const drainScale=t<300?(1.25-(1.25-1.05)*(t/300)):1.05; // 1.25x→1.05x over 5 min
+    let rate=-def.drain*0.7*drainScale*(u.dmul||1)*d;
     if(u.links>0)rate+=FILL*u.links*(demo?1:(1+0.5*(d-1)));
     const before=u.b;
     u.b+=rate*dt;
-    if(!demo&&u.links>0&&u.b>before){score+=(u.b-before)*0.5*combo;}  // points for power delivered
+    if(!demo&&u.links>0&&u.b>before){score+=(u.b-before)*0.06*combo;}  // calibrated earn rate
     if(!u.warned&&u.b<=u.max*0.28){u.warned=true;SFX.low();}
     if(u.b>u.max*0.42)u.warned=false;
     if(u.b>=u.max){
@@ -999,10 +1122,15 @@ function loop(now,step){
       if(wasCharging){
         u.links=0;SFX.full();burst(u.x,u.y,{n:11,color:def.bonus?'#22e0ff':'#3df09a'});
         if(!demo){
-          combo=Math.min(5,Math.round((combo+0.1)*10)/10);
-          const bonus=Math.round(25*combo);score+=bonus;
+          // combo +0.1 only if unit was at ≤40% when charging started
+          const fromLow=(u.chargeStart!=null&&u.chargeStart<=u.max*0.50);
+          if(fromLow){
+            combo=Math.min(5,Math.round((combo+0.1)*10)/10);
+            showCombo();SFX.combo(combo);
+          }
+          u.chargeStart=null;
+          const bonus=Math.round(12*combo);score+=bonus;
           scorePops.push({x:u.x,y:u.y-u.r-10,txt:'+'+money(bonus),life:1.0});
-          showCombo();SFX.combo(combo);
         }
       }
     }
@@ -1025,10 +1153,23 @@ function loop(now,step){
   updateCamera(dt);
   updatePowerup(dt);
   updatePuBtn(dt);
+  updateHold(dt);
+  // tutorial tap-hint: show hand on a unit ≤80%, up to 3 times
+  if(!demo&&tutHintCount<3){
+    if(tutHintUnit){
+      // clear if unit was removed from the game or recovered
+      if(!units.includes(tutHintUnit)||tutHintUnit.links>0||tutHintUnit.dark>0||tutHintUnit.b>tutHintUnit.max*0.80)
+        {tutHintUnit=null;tutHintTimer=0;}
+      else tutHintTimer=Math.max(0,tutHintTimer-dt); // count up for fade-in only
+    } else {
+      const _hu=units.find(u=>u.b<=u.max*0.80&&u.links===0&&u.dark===0&&u.spawn>=1);
+      if(_hu){tutHintUnit=_hu;tutHintTimer=2.8;tutHintCount++;}
+    }
+  } else if(demo){tutHintUnit=null;}
   updateParticles(dt);
   for(let i=scorePops.length-1;i>=0;i--){const p=scorePops[i];p.y-=28*dt;p.life-=dt*1.3;if(p.life<=0)scorePops.splice(i,1);}
   for(let i=darkPops.length-1;i>=0;i--){const p=darkPops[i];p.y-=14*dt;p.life-=dt;if(p.life<=0)darkPops.splice(i,1);}
-  if(toastTimer>0){toastTimer-=dt;if(toastTimer<=0)$('toast').classList.remove('show');}
+  if(toastTimer>0){toastTimer-=dt;if(toastTimer<=0){const e=$('toast');e.classList.remove('show','big');}}
   if(flashT>0){flashT-=dt;$('flash').style.opacity=Math.max(0,flashT/0.4*0.8);}
   if(shakeT>0)shakeT-=dt;
   if(expandFlash>0)expandFlash-=dt;
@@ -1075,8 +1216,8 @@ function runDeath(dt){
 function fmt(s){const m=Math.floor(s/60),ss=Math.floor(s%60);return m+':'+String(ss).padStart(2,'0');}
 function money(v){return '$'+Math.floor(v).toLocaleString();}
 function renderLives(){
-  if(lives>3){$('lives').innerHTML='<span style="color:#22e0ff;text-shadow:0 0 8px rgba(34,224,255,.7)">❤</span><span style="font-size:.7em;vertical-align:middle"> ×'+lives+'</span>';return;}
-  const max=3;let s='';for(let i=0;i<max;i++)s+='<span style="color:#22e0ff;text-shadow:0 0 8px rgba(34,224,255,.7)'+(i<lives?'':';opacity:.25')+'">❤</span>';$('lives').innerHTML=s;
+  if(lives>3){$('lives').innerHTML='<span style="color:#22e0ff;text-shadow:0 0 8px rgba(34,224,255,.7)">⚡</span><span style="font-size:.7em;vertical-align:middle"> ×'+lives+'</span>';return;}
+  const max=3;let s='';for(let i=0;i<max;i++)s+='<span style="color:#22e0ff;text-shadow:0 0 8px rgba(34,224,255,.7)'+(i<lives?'':';opacity:.25')+'">⚡</span>';$('lives').innerHTML=s;
 }
 
 /* ============ RENDER ============ */
@@ -1122,14 +1263,40 @@ function draw(){
     }
   }
   drawParticles();
+  // tutorial tap-hint: 👇 tapping animation centered ON unit
+  if(tutHintUnit&&units.includes(tutHintUnit)&&tutHintUnit.spawn>=1&&tutHintUnit.dark<=0){
+    const u=tutHintUnit;
+    const sp=0.1+0.9*(u.spawn<1?(1-Math.pow(1-Math.max(0,u.spawn),3)):1);
+    const R=u.r*sp;
+    const now2=performance.now();
+    // tap cycle: 0.8s — press down 0.35s, release 0.45s
+    const cyc=(now2%800)/800;
+    const pressP=cyc<0.44?Math.sin(cyc/0.44*Math.PI):0; // 0→1→0 during press phase
+    const pressOffset=pressP*R*0.55;  // hand moves DOWN toward unit center
+    // fade in over 0.3s (tutHintTimer used only for fade-in)
+    const fadeA=Math.min(1,Math.max(0,(2.8-tutHintTimer)/0.3+0.01)); // fade in, no fade out
+    const hsz=R*1.55;
+    // position: hand fingertip touches unit top — place hand above so 👇 tip aims at unit
+    const handY=u.y-R*0.35-hsz*0.15+pressOffset; // fingertip on unit, moves down during tap
+    ctx.save();ctx.globalAlpha=Math.max(0,Math.min(1,fadeA));
+    // subtle glow ring on unit while hinting
+    const glowR=R+5+2*Math.sin(now2/300);
+    ctx.beginPath();ctx.arc(u.x,u.y,glowR,0,7);
+    ctx.strokeStyle=TH.cyan||'#22e0ff';ctx.lineWidth=2;ctx.globalAlpha=(Math.max(0,Math.min(1,fadeA)))*0.7;ctx.stroke();
+    // draw 👇 pointing down onto unit
+    ctx.globalAlpha=Math.max(0,Math.min(1,fadeA));
+    ctx.font=hsz+'px serif';ctx.textAlign='center';ctx.textBaseline='top';
+    ctx.fillText('👇',u.x,handY-hsz*0.9);
+    ctx.restore();
+  }
   if(fxFreeze>0){ctx.fillStyle='rgba(120,200,255,'+(0.10+0.04*Math.sin(t*5))+')';ctx.fillRect(0,0,WW,WH);}
   else if(fxSlow>0){ctx.fillStyle='rgba(120,255,230,0.06)';ctx.fillRect(0,0,WW,WH);}
   if(scorePops.length){ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.font="bold 16px 'Share Tech Mono'";
-    for(const p of scorePops){ctx.globalAlpha=Math.min(1,p.life);ctx.fillStyle='#ffb524';ctx.fillText(p.txt,p.x,p.y);}
+    for(const p of scorePops){ctx.globalAlpha=Math.min(1,p.life);ctx.fillStyle=TH.amber||'#ffb524';ctx.fillText(p.txt,p.x,p.y);}
     ctx.globalAlpha=1;ctx.restore();}
   if(darkPops.length){ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.font="bold 15px 'Chakra Petch'";
     for(const p of darkPops){const a=Math.min(1,p.life/0.4);ctx.globalAlpha=a;
-      ctx.fillStyle='#ff4d5e';ctx.shadowColor='rgba(255,77,94,.8)';ctx.shadowBlur=8;
+      ctx.fillStyle=TH.red||'#ff4d5e';ctx.shadowColor='rgba(255,77,94,.8)';ctx.shadowBlur=8;
       ctx.fillText('⚠ '+p.txt,p.x,p.y);ctx.shadowBlur=0;}
     ctx.globalAlpha=1;ctx.restore();}
   ctx.restore();
@@ -1144,28 +1311,71 @@ function draw(){
     ctx.translate(W/2,H*0.46);ctx.scale(scale,scale);
     ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.shadowColor='rgba(255,181,36,.7)';ctx.shadowBlur=24;
-    ctx.fillStyle='#ffb524';ctx.font="700 46px 'Chakra Petch'";
+    ctx.fillStyle=TH.amber||'#ffb524';ctx.font="700 46px 'Chakra Petch'";
     ctx.fillText('CITY EXPANDED',0,0);ctx.shadowBlur=0;
-    ctx.fillStyle='var(--text)';ctx.fillStyle='#cfe3ff';ctx.font="600 18px 'Chakra Petch'";
+    ctx.fillStyle=TH.expandSub||'#cfe3ff';ctx.font="600 18px 'Chakra Petch'";
     ctx.fillText('🏙️  New zone & grid online',0,40);
     ctx.restore();
   }
 }
 function drawGrid(g,i){
   const pulse=0.5+0.5*Math.sin(t*3),R=Math.max(1,gridR(g));
+  const isAuto=!!g.auto;
+  const gridColor=isAuto?(TH.amber||'#ffb524'):(TH.cyan||'#22e0ff');
+  const gridBody=isAuto?(theme==='light'?'#f0e8d4':'#231a00'):(TH.gridbody||'#0c2231');
+
   ctx.save();
-  const gR=R+16+10*pulse;ctx.globalAlpha=0.8;ctx.drawImage(glowSprite('#22e0ff'),g.x-gR,g.y-gR,gR*2,gR*2);ctx.globalAlpha=1;
-  ctx.beginPath();ctx.arc(g.x,g.y,R,0,7);ctx.fillStyle=TH.gridbody||'#0c2231';ctx.fill();
-  ctx.lineWidth=2.5;ctx.strokeStyle='#22e0ff';ctx.stroke();
-  const bsz=R*1.2;ctx.drawImage(iconSprite('⚡'),g.x-bsz/2,g.y-bsz/2,bsz,bsz);
+  const gR=R+16+10*pulse;ctx.globalAlpha=0.8;
+  ctx.drawImage(glowSprite(gridColor),g.x-gR,g.y-gR,gR*2,gR*2);ctx.globalAlpha=1;
+
+  if(isAuto){
+    // rounded square for automated grid
+    const hw=R*0.88,cr=R*0.26;
+    roundRect(g.x-hw,g.y-hw,hw*2,hw*2,cr);
+    ctx.fillStyle=gridBody;ctx.fill();
+    ctx.lineWidth=2.5;ctx.strokeStyle=gridColor;ctx.stroke();
+    // slow rotating spokes
+    const rot=performance.now()/2200;
+    ctx.save();ctx.translate(g.x,g.y);ctx.rotate(rot);
+    ctx.strokeStyle=gridColor;ctx.lineWidth=1.5;ctx.globalAlpha=0.4;
+    for(let d=0;d<6;d++){const a=d*Math.PI/3;
+      ctx.beginPath();ctx.moveTo(Math.cos(a)*R*0.48,Math.sin(a)*R*0.48);
+      ctx.lineTo(Math.cos(a)*R*0.76,Math.sin(a)*R*0.76);ctx.stroke();}
+    ctx.restore();ctx.globalAlpha=1;
+    const isz=R*1.1;ctx.drawImage(iconSprite('🤖'),g.x-isz/2,g.y-isz/2,isz,isz);
+  } else {
+    ctx.beginPath();ctx.arc(g.x,g.y,R,0,7);ctx.fillStyle=gridBody;ctx.fill();
+    ctx.lineWidth=2.5;ctx.strokeStyle=gridColor;ctx.stroke();
+    // hold fill
+    const isThisHeld=holdGrid&&holdGrid.g===g&&holdProgress>0;
+    if(isThisHeld){
+      const p=holdProgress;
+      const nextIsAuto=g.cap>=3;
+      const canAfford=nextIsAuto?score>=GRID_AUTO_COST:score>=gridUpgradeCost(g);
+      const fillCol=(!canAfford&&p>=0.5)?'rgba(255,181,36,.35)':'rgba(34,224,255,.28)';
+      const strokeCol=(!canAfford&&p>=0.5)?(TH.amber||'#ffb524'):(TH.cyan||'#22e0ff');
+      ctx.beginPath();ctx.arc(g.x,g.y,R*p,0,7);ctx.fillStyle=fillCol;ctx.fill();
+      ctx.beginPath();ctx.arc(g.x,g.y,R,-Math.PI/2,-Math.PI/2+p*Math.PI*2);
+      ctx.strokeStyle=strokeCol;ctx.lineWidth=4;ctx.lineCap='round';ctx.stroke();
+      ctx.fillStyle=strokeCol;ctx.font="bold 11px 'Chakra Petch'";ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(nextIsAuto?('AUTO '+money(GRID_AUTO_COST)):money(gridUpgradeCost(g)),g.x,g.y+R*0.55);
+    } else {
+      ctx.drawImage(iconSprite('⚡'),g.x-R*0.6,g.y-R*0.6,R*1.2,R*1.2);
+    }
+  }
+
   ctx.restore();
-  ctx.fillStyle='#22e0ff';ctx.font="14px 'Share Tech Mono'";ctx.textAlign='center';ctx.textBaseline='top';
-  const used=gridUsed(i),full=used>=g.cap;
-  const ty=g.y+R+20;                       // clear of pulsing ring
-  ctx.fillText(used+'/'+g.cap,g.x,ty);
-  if(full){const fp=0.5+0.5*Math.sin(t*7);ctx.save();ctx.globalAlpha=0.55+0.45*fp;
-    ctx.strokeStyle='#ffb524';ctx.lineWidth=2;ctx.beginPath();ctx.arc(g.x,g.y,R+5+3*fp,0,7);ctx.stroke();
-    ctx.fillStyle='#ffb524';ctx.font="bold 12px 'Chakra Petch'";ctx.fillText('FULL',g.x,ty+18);ctx.restore();}
+  ctx.fillStyle=gridColor;ctx.font="bold 13px 'Share Tech Mono'";ctx.textAlign='center';ctx.textBaseline='top';
+  const used=gridUsed(i),full=!isAuto&&used>=g.cap;
+  const ty=g.y+R+20;
+  if(isAuto){
+    ctx.fillText('AUTO',g.x,ty);
+  } else {
+    ctx.fillText(used+'/'+g.cap,g.x,ty);
+    if(full){const fp=0.5+0.5*Math.sin(t*7);ctx.save();ctx.globalAlpha=0.55+0.45*fp;
+      ctx.strokeStyle=TH.amber||'#ffb524';ctx.lineWidth=2;ctx.beginPath();ctx.arc(g.x,g.y,R+5+3*fp,0,7);ctx.stroke();
+      ctx.fillStyle=TH.amber||'#ffb524';ctx.font="bold 12px 'Chakra Petch'";ctx.fillText('FULL',g.x,ty+18);ctx.restore();}
+  }
   ctx.textBaseline='alphabetic';
 }
 function drawWire(g,u,n){
@@ -1174,13 +1384,15 @@ function drawWire(g,u,n){
   ctx.save();ctx.lineCap='round';
   for(let i=0;i<n;i++){
     const off=(i-(n-1)/2)*8,gx=g.x+nx*off,gy=g.y+ny*off,ux=u.x+nx*off,uy=u.y+ny*off;
-    ctx.strokeStyle='rgba(34,224,255,.16)';ctx.lineWidth=9.6;ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(ux,uy);ctx.stroke();
-    ctx.strokeStyle='#22e0ff';ctx.lineWidth=2.4;ctx.setLineDash([12,14]);ctx.lineDashOffset=-(t2*60)%26;
+    ctx.strokeStyle=TH.wireGlow||'rgba(34,224,255,.16)';ctx.lineWidth=9.6;
+    if(theme==='light'){ctx.strokeStyle=TH.wireGlow;}
+    ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(ux,uy);ctx.stroke();
+    ctx.strokeStyle=TH.cyan||'#22e0ff';ctx.lineWidth=2.4;ctx.setLineDash([12,14]);ctx.lineDashOffset=-(t2*60)%26;
     ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(ux,uy);ctx.stroke();ctx.setLineDash([]);
     // traveling energy: glow + dot + ⚡ icon flowing grid→unit
     const p=((t2*0.9)+i*0.25)%1,ex=gx+(ux-gx)*p,ey=gy+(uy-gy)*p;
     ctx.globalAlpha=0.9;ctx.drawImage(glowSprite('#22e0ff'),ex-10,ey-10,20,20);ctx.globalAlpha=1;
-    ctx.fillStyle='#bdf6ff';ctx.beginPath();ctx.arc(ex,ey,3,0,7);ctx.fill();
+    ctx.fillStyle=TH.wireDot||'#bdf6ff';ctx.beginPath();ctx.arc(ex,ey,3,0,7);ctx.fill();
     // offset bolt traveling slightly behind the dot
     const p2=((t2*0.9)+i*0.25+0.5)%1,bx=gx+(ux-gx)*p2,by=gy+(uy-gy)*p2;
     const isz=16;ctx.globalAlpha=0.95;ctx.drawImage(iconSprite('⚡'),bx-isz/2,by-isz/2,isz,isz);ctx.globalAlpha=1;
@@ -1214,13 +1426,14 @@ function drawUnit(u){
   ctx.globalAlpha=gA;ctx.drawImage(glowSprite(col),-gR,-gR,gR*2,gR*2);ctx.globalAlpha=1;
   ctx.beginPath();ctx.arc(0,0,R,0,7);ctx.fillStyle=blackout?(TH.unitdark||'#15171c'):(TH.unitbody||'#0d1626');ctx.fill();
   ctx.lineWidth=u.links>0?3:2;ctx.strokeStyle=col;ctx.globalAlpha=blackout?0.5:flash;ctx.stroke();ctx.globalAlpha=1;
-  if(u.steal>0){const a=u.steal/0.6;ctx.strokeStyle='#ffb524';ctx.globalAlpha=a;ctx.lineWidth=3;
+  if(u.steal>0){const a=u.steal/0.6;ctx.strokeStyle=TH.amber||'#ffb524';ctx.globalAlpha=a;ctx.lineWidth=3;
     ctx.beginPath();ctx.arc(0,0,R+5+8*(1-a),0,7);ctx.stroke();ctx.globalAlpha=1;}
   // icon centered (cached sprite)
   const isz=R*1.5;ctx.globalAlpha=blackout?0.3:1;
   ctx.drawImage(iconSprite(def.icon),-isz/2,-isz/2,isz,isz);ctx.globalAlpha=1;
-  // battery bar (taller, with % inside; zoom-compensated)
-  const bw=u.r*2.0*sp*Math.min(1.5,zc),bh=13*Math.min(1.5,zc),bx=-bw/2,by=R+7*zc;
+  // battery bar (taller, with % inside; zoom-compensated; 1.25x when charging)
+  const barScale=u.links>0?1.25:1;
+  const bw=u.r*2.0*sp*Math.min(1.5,zc)*barScale,bh=13*Math.min(1.5,zc)*barScale,bx=-bw/2,by=R+7*zc;
   ctx.fillStyle='rgba(0,0,0,.45)';roundRect(bx,by,bw,bh,4);ctx.fill();
   ctx.fillStyle=col;roundRect(bx,by,bw*(u.b/u.max),bh,4);ctx.fill();
   if(!blackout){
@@ -1229,12 +1442,12 @@ function drawUnit(u){
     ctx.font="bold "+fz.toFixed(1)+"px 'Share Tech Mono'";
     ctx.textAlign='center';ctx.textBaseline='middle';
     const tx=0,tyc=by+bh/2+0.5;
-    ctx.lineWidth=Math.max(2,fz*0.32);ctx.strokeStyle='rgba(5,12,20,.9)';
-    ctx.lineJoin='round';ctx.strokeText(pct+'%',tx,tyc);   // dark outline
-    ctx.fillStyle='#ffffff';ctx.fillText(pct+'%',tx,tyc);   // white core
+    ctx.lineWidth=Math.max(2,fz*0.32);ctx.strokeStyle=TH.pctOutline||'rgba(5,12,20,.9)';
+    ctx.lineJoin='round';ctx.strokeText(pct+'%',tx,tyc);   // outline for contrast
+    ctx.fillStyle=TH.pctText||'#ffffff';ctx.fillText(pct+'%',tx,tyc);
     ctx.textBaseline='alphabetic';
   }
-  if(def.cost){ctx.fillStyle='#ff4d5e';ctx.font="bold "+(9*zc).toFixed(1)+"px 'Chakra Petch'";ctx.textAlign='center';ctx.fillText('-2',0,by+bh+9*zc);}
+  if(def.cost){ctx.fillStyle=TH.red||'#ff4d5e';ctx.font="bold "+(9*zc).toFixed(1)+"px 'Chakra Petch'";ctx.textAlign='center';ctx.fillText('-2',0,by+bh+9*zc);}
   ctx.restore();
 }
 function charKind(u){
@@ -1273,7 +1486,7 @@ function drawHelper(px,py,h,kind,urg,now){
   else if(kind==='doctor'){ctx.fillStyle='#fff';ctx.fillRect(-hh,-h*0.2-hh*0.9,hh*2,hh*0.6);ctx.fillStyle='#ff4d5e';ctx.fillRect(-hh*0.18,-h*0.2-hh*0.85,hh*0.36,hh*0.5);}
   else{ctx.beginPath();ctx.arc(0,-h*0.24,hh,Math.PI,0);ctx.fill();}
   // urgency mark
-  if(urg>0.55){ctx.fillStyle='#ff4d5e';ctx.font='bold '+(h*0.5)+'px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  if(urg>0.55){ctx.fillStyle=TH.red||'#ff4d5e';ctx.font='bold '+(h*0.5)+'px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.globalAlpha=0.7+0.3*Math.abs(Math.sin(now/120));ctx.fillText('!',h*0.5,-h*0.45);ctx.globalAlpha=1;}
   ctx.restore();
 }
@@ -1288,7 +1501,7 @@ function drawPowerup(p){
   // diamond glow body
   const gR=R+10*pulse;ctx.globalAlpha=0.8;ctx.drawImage(glowSprite(col),-gR,-gR,gR*2,gR*2);ctx.globalAlpha=1;
   ctx.rotate(Math.PI/4);
-  const s=R*1.25;ctx.fillStyle='#0d1626';ctx.fillRect(-s/2,-s/2,s,s);
+  const s=R*1.25;ctx.fillStyle=TH.puBody||'#0d1626';ctx.fillRect(-s/2,-s/2,s,s);
   ctx.lineWidth=p.links>0?3:2;ctx.strokeStyle=col;ctx.strokeRect(-s/2,-s/2,s,s);
   ctx.rotate(-Math.PI/4);
   // icon (cached sprite)
@@ -1398,6 +1611,8 @@ const TUT=[
   {t:"👉 <b>Tap a building</b> now to run a supply wire and start charging it.",require:'link'},
   {t:"Nice! That wire pumps power in. Tap the <b>same building again</b> to send more — it fills faster.",require:'link2'},
   {t:"Your grid powers only a few at once (the <b>X/Y</b> on the grid). When one is full, move supply to a building that's running low.",btn:"Next"},
+  {t:"As your city grows, <b>buy more grids</b> with your cash! The <b>Buy Grid</b> button appears at the bottom when you can afford it. Tap it, then tap where you want to place it.",btn:"Next",demo:'grid'},
+  {t:"<b>Hold-tap a grid</b> to upgrade its capacity (max 3) for a cash cost. More capacity = more buildings powered at once!",btn:"Next",demo:'upgrade'},
   {t:"That's it! Notice some buildings drain fast (factories) and some slow (houses). Keep them all alive. Ready for the real city?",btn:"Start Game"},
 ];
 function launchTutorial(){
@@ -1423,6 +1638,7 @@ function showStep(){
   }
   const skip=document.createElement('button');skip.className='btn ghost';skip.textContent='Skip';skip.onclick=endTutorial;row.appendChild(skip);
   $('coach').classList.remove('hidden');
+  hidePuBtn();
 }
 function nextStep(){SFX.btn();tutStep++;if(tutStep>=TUT.length){endTutorial();}else showStep();}
 function checkTutorial(){
@@ -1430,7 +1646,210 @@ function checkTutorial(){
   if(s.require==='link'&&units.some(u=>u.links>=1)){tutStep++;showStep();}
   else if(s.require==='link2'&&units.some(u=>u.links>=2)){tutStep++;showStep();}
 }
-function endTutorial(){SFX.btn();$('coach').classList.add('hidden');start();}
+function endTutorial(){SFX.btn();$('coach').classList.add('hidden');hidePuBtn();start();}
+/* ============ MECHANIC TUTORIAL OVERLAYS ============ */
+let mechTutType=null, mechTutRaf=null, mechTutShown={upgrade:false, automate:false};
+
+function showMechTut(type){
+  if(mechTutShown[type]||state==='tutoverlay')return;
+  mechTutShown[type]=true;
+  mechTutType=type;
+  state='tutoverlay';  // pause game loop
+  holdGrid=null;holdProgress=0;holdWarnShown=false;
+  const label=$('mechTutLabel');
+  if(type==='upgrade'){
+    label.innerHTML='Hold your finger on any grid to upgrade its capacity.<br>Fill the ring to confirm — costs cash!';
+    label.style.color='#22e0ff';
+  } else {
+    label.innerHTML='Grid at max capacity! Hold again to <b style="color:#ffb524">AUTOMATE</b> it.<br>It will charge buildings by itself.';
+    label.style.color='#ffb524';
+  }
+  $('mechTut').classList.remove('hidden');
+  startMechTutAnim(type);
+}
+
+function hideMechTut(){
+  $('mechTut').classList.add('hidden');
+  if(mechTutRaf){cancelAnimationFrame(mechTutRaf);mechTutRaf=null;}
+  mechTutType=null;
+  if(state==='tutoverlay'){state='play';last=performance.now();startLoop();}
+}
+
+function startMechTutAnim(type){
+  if(mechTutRaf){cancelAnimationFrame(mechTutRaf);mechTutRaf=null;}
+  const cv=$('mechTutCv');
+  const dpr=Math.min(2,devicePixelRatio||1);
+  const SZ=Math.min(300, window.innerWidth*0.82, window.innerHeight*0.45);
+  cv.width=SZ*dpr; cv.height=SZ*dpr;
+  cv.style.width=SZ+'px'; cv.style.height=SZ+'px';
+  const dx=cv.getContext('2d');
+  dx.setTransform(dpr,0,0,dpr,0,0);
+  const W2=SZ,H2=SZ,cx=W2/2,cy=H2*0.48,R=SZ*0.22;
+  const h=R*Math.sqrt(3);
+
+  const CYCLE=type==='upgrade'?3.6:4.2;
+  const HOLD_START=0.5, HOLD_DUR=1.3;
+  const t0=performance.now();
+
+  function frame(now){
+    mechTutRaf=requestAnimationFrame(frame);
+    dx.clearRect(0,0,W2,H2);
+    const elapsed=(now-t0)/1000;
+    const cyc=elapsed%CYCLE;
+
+    if(type==='upgrade'){
+      /* phases: 0-0.5 show, 0.5-1.8 hold+fill, 1.8-2.4 upgraded flash, 2.4-3.0 show result, 3.0+ fade */
+      const holdP=cyc<HOLD_START?0:cyc<HOLD_START+HOLD_DUR?Math.min(1,(cyc-HOLD_START)/HOLD_DUR):1;
+      const upgraded=cyc>HOLD_START+HOLD_DUR;
+      const fadeA=cyc>3.0?Math.max(0,1-(cyc-3.0)/0.6):1;
+
+      // glow
+      const gc=dx.createRadialGradient(cx,cy,0,cx,cy,R*1.4);
+      gc.addColorStop(0,`rgba(34,224,255,${0.22*fadeA})`);gc.addColorStop(1,'rgba(0,0,0,0)');
+      dx.fillStyle=gc;dx.beginPath();dx.arc(cx,cy,R*1.6,0,7);dx.fill();
+
+      // grid circle
+      dx.save();dx.globalAlpha=fadeA;
+      dx.beginPath();dx.arc(cx,cy,R,0,7);
+      dx.fillStyle=upgraded?'#0c2e18':'#0c2231';dx.fill();
+      dx.strokeStyle=upgraded?'#3df09a':'#22e0ff';dx.lineWidth=3;dx.stroke();
+
+      // ⚡ icon (fade out as fill grows)
+      if(holdP<0.6){dx.globalAlpha=(1-holdP/0.6)*fadeA;dx.font=(R*0.9)+'px serif';dx.textAlign='center';dx.textBaseline='middle';dx.fillText('⚡',cx,cy+2);dx.globalAlpha=fadeA;}
+
+      // fill from center
+      if(holdP>0&&!upgraded){
+        dx.beginPath();dx.arc(cx,cy,R*holdP,0,7);dx.fillStyle='rgba(34,224,255,.22)';dx.fill();
+        dx.beginPath();dx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+holdP*Math.PI*2);
+        dx.strokeStyle='#22e0ff';dx.lineWidth=4;dx.lineCap='round';dx.stroke();
+      }
+
+      // upgraded: green burst + checkmark
+      if(upgraded){
+        const fp=Math.min(1,(cyc-(HOLD_START+HOLD_DUR))/0.35);
+        dx.globalAlpha=Math.sin(fp*Math.PI)*0.7*fadeA;
+        dx.beginPath();dx.arc(cx,cy,R+fp*28,0,7);dx.strokeStyle='#3df09a';dx.lineWidth=4*(1-fp);dx.stroke();
+        dx.globalAlpha=fadeA;
+        dx.font=(R*0.9)+'px serif';dx.textAlign='center';dx.textBaseline='middle';
+        dx.fillText('⚡',cx,cy+2);
+        // capacity label
+        dx.fillStyle='#3df09a';dx.font=`bold ${R*0.55}px 'Chakra Petch'`;
+        dx.textBaseline='top';dx.fillText('⬆ 1 → 2',cx,cy+R+14);
+      } else if(holdP===0){
+        dx.fillStyle='#22e0ff';dx.font=`bold ${R*0.45}px 'Share Tech Mono'`;
+        dx.textBaseline='top';dx.fillText('1/1',cx,cy+R+12);
+      }
+      dx.restore();
+
+      // finger
+      if(cyc<HOLD_START+HOLD_DUR+0.3){
+        const fp2=cyc<HOLD_START?Math.min(1,cyc/0.3):1;
+        const pressOff=cyc>=HOLD_START?holdP*R*0.4:0;
+        const liftA=cyc>HOLD_START+HOLD_DUR?Math.max(0,1-(cyc-(HOLD_START+HOLD_DUR))/0.3):1;
+        dx.globalAlpha=fp2*liftA*fadeA;
+        dx.font=(R*1.4)+'px serif';dx.textAlign='center';dx.textBaseline='top';
+        dx.fillText('👇',cx,(cy-R*0.45)-R*1.2+pressOff);
+        dx.globalAlpha=1;
+      }
+
+    } else { // automate
+      /* phases: 0-0.5 show (cap3 circle), 0.5-1.8 hold+fill, 1.8-2.6 morph, 2.6-3.8 show AUTO, 3.8+ fade */
+      const holdP=cyc<HOLD_START?0:cyc<HOLD_START+HOLD_DUR?Math.min(1,(cyc-HOLD_START)/HOLD_DUR):1;
+      const morphP=cyc<HOLD_START+HOLD_DUR?0:Math.min(1,(cyc-(HOLD_START+HOLD_DUR))/0.8);
+      const fadeA=cyc>3.8?Math.max(0,1-(cyc-3.8)/0.4):1;
+      const col=morphP>0.5?'#ffb524':'#22e0ff';
+
+      // glow
+      const gc2=dx.createRadialGradient(cx,cy,0,cx,cy,R*1.5);
+      gc2.addColorStop(0,`rgba(${morphP>0.5?'255,181,36':'34,224,255'},${0.22*fadeA})`);gc2.addColorStop(1,'rgba(0,0,0,0)');
+      dx.fillStyle=gc2;dx.beginPath();dx.arc(cx,cy,R*1.7,0,7);dx.fill();
+
+      dx.save();dx.globalAlpha=fadeA;
+
+      // shape morphing circle → rounded square
+      if(morphP<0.05){
+        dx.beginPath();dx.arc(cx,cy,R,0,7);
+        dx.fillStyle='#0c2231';dx.fill();dx.strokeStyle='#22e0ff';dx.lineWidth=3;dx.stroke();
+      } else {
+        const hw=R*(0.88);const cr=R*(0.26);
+        // lerp from full-circle to square by increasing hw and decreasing arc
+        dx.beginPath();
+        const bx=cx-hw,by=cy-hw;
+        dx.moveTo(bx+cr,by);dx.lineTo(bx+hw*2-cr,by);dx.arcTo(bx+hw*2,by,bx+hw*2,by+cr,cr);
+        dx.lineTo(bx+hw*2,by+hw*2-cr);dx.arcTo(bx+hw*2,by+hw*2,bx+hw*2-cr,by+hw*2,cr);
+        dx.lineTo(bx+cr,by+hw*2);dx.arcTo(bx,by+hw*2,bx,by+hw*2-cr,cr);
+        dx.lineTo(bx,by+cr);dx.arcTo(bx,by,bx+cr,by,cr);dx.closePath();
+        dx.fillStyle=morphP>0.5?'#231a00':'#0c2231';dx.fill();
+        dx.strokeStyle=col;dx.lineWidth=3;dx.stroke();
+      }
+
+      // icon: ⚡ → 🤖
+      dx.font=(R*0.9)+'px serif';dx.textAlign='center';dx.textBaseline='middle';
+      if(morphP<0.5){dx.globalAlpha=(1-morphP*2)*fadeA;dx.fillText('⚡',cx,cy+2);}
+      if(morphP>0.5){dx.globalAlpha=((morphP-0.5)*2)*fadeA;dx.fillText('🤖',cx,cy+2);}
+      dx.globalAlpha=fadeA;
+
+      // fill ring (amber, during hold)
+      if(holdP>0&&morphP===0){
+        dx.beginPath();dx.arc(cx,cy,R*holdP,0,7);dx.fillStyle='rgba(255,181,36,.22)';dx.fill();
+        dx.beginPath();dx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+holdP*Math.PI*2);
+        dx.strokeStyle='#ffb524';dx.lineWidth=4;dx.lineCap='round';dx.stroke();
+      }
+
+      // burst on morph
+      if(morphP>0&&morphP<0.9){
+        dx.globalAlpha=Math.sin(morphP*Math.PI)*0.65*fadeA;
+        dx.beginPath();dx.arc(cx,cy,R+morphP*30,0,7);dx.strokeStyle='#ffb524';dx.lineWidth=4*(1-morphP);dx.stroke();
+        dx.globalAlpha=fadeA;
+      }
+
+      // label below
+      dx.textBaseline='top';dx.font=`bold ${R*0.55}px 'Chakra Petch'`;
+      if(morphP<0.5){dx.fillStyle='#22e0ff';dx.globalAlpha=(1-morphP*2)*fadeA;dx.fillText('3/3',cx,cy+R+14);}
+      if(morphP>0.5){dx.fillStyle='#ffb524';dx.globalAlpha=((morphP-0.5)*2)*fadeA;dx.fillText('AUTO',cx,cy+R+14);}
+      dx.globalAlpha=fadeA;
+
+      dx.restore();
+
+      // rotating spokes (when automated)
+      if(morphP>0.6){
+        const rot=now/2000;
+        dx.save();dx.translate(cx,cy);dx.rotate(rot);
+        dx.strokeStyle='#ffb524';dx.lineWidth=1.5;dx.globalAlpha=((morphP-0.6)/0.4)*0.4*fadeA;
+        for(let d=0;d<6;d++){const a=d*Math.PI/3;dx.beginPath();dx.moveTo(Math.cos(a)*R*0.45,Math.sin(a)*R*0.45);dx.lineTo(Math.cos(a)*R*0.72,Math.sin(a)*R*0.72);dx.stroke();}
+        dx.restore();
+      }
+
+      // finger
+      if(cyc<HOLD_START+HOLD_DUR+0.25){
+        const fp2=cyc<HOLD_START?Math.min(1,cyc/0.3):1;
+        const pressOff=cyc>=HOLD_START?holdP*R*0.42:0;
+        const liftA=cyc>HOLD_START+HOLD_DUR?Math.max(0,1-(cyc-(HOLD_START+HOLD_DUR))/0.25):1;
+        dx.globalAlpha=fp2*liftA*fadeA;
+        dx.font=(R*1.4)+'px serif';dx.textAlign='center';dx.textBaseline='top';
+        dx.fillText('👇',cx,(cy-R*0.45)-R*1.2+pressOff);
+        dx.globalAlpha=1;
+      }
+    }
+  }
+  mechTutRaf=requestAnimationFrame(frame);
+}
+
+// Trigger checks (called from progress/updateHold)
+let upgradeTutTriggered=false, automateTutTriggered=false;
+function resetMechTutFlags(){upgradeTutTriggered=false;automateTutTriggered=false;mechTutShown={upgrade:false,automate:false};}
+
+function checkUpgradeTutTrigger(){
+  if(upgradeTutTriggered||state==='tutoverlay')return;
+  const g=grids.find(g=>g.cap<3&&!g.auto);
+  if(!g)return;
+  const cost=gridUpgradeCost(g);
+  if(score>=cost){upgradeTutTriggered=true;showMechTut('upgrade');}
+}
+function triggerAutomateTut(){
+  if(automateTutTriggered||state==='tutoverlay')return;
+  automateTutTriggered=true;showMechTut('automate');
+}
 
 function openHow(){SFX.btn();hideAllOverlays();$('howto').classList.remove('hidden');}
 
@@ -1442,10 +1861,10 @@ $('restartBtn').onclick=()=>{SFX.btn();start();};
 $('homeBtn').onclick=goHome;
 $('overHomeBtn').onclick=goHome;
 $('menuBtn').onclick=pauseGame;
+$('gridBuyBtn').onclick=enterPlaceMode;
+$('mechTutBtn').onclick=()=>{SFX.btn();hideMechTut();};
 $('puBtn').onclick=buyPuBtn;
-$('howBtn').onclick=openHow;
-$('mgrBtn').onclick=closeIntro;
-$('howBackBtn').onclick=goHome;
+$('howBtn').onclick=openHow;$('howBackBtn').onclick=goHome;
 $('tryTutBtn').onclick=()=>{SFX.btn();launchTutorial();};
 function applyMute(){
   if(master&&AC)master.gain.setTargetAtTime(sfxOn?0.85:0,AC.currentTime,0.02);
